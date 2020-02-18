@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Net;
 using System.Web;
 
 namespace Final_Project_Code_First.Models
@@ -32,6 +33,11 @@ namespace Final_Project_Code_First.Models
         [Column("Request_Reciever_Id")]
         public int? RecieverId { get; set; }
         public virtual User RecieverUser { get; set; }
+
+        internal static object CreateResponse(HttpStatusCode created)
+        {
+            throw new NotImplementedException();
+        }
     }
     public enum RequestStatusEnum
     {

@@ -142,24 +142,118 @@ namespace Final_Project_Code_First.Controllers
                     throw;
                 }
             }
-
             return StatusCode(HttpStatusCode.NoContent);
         }
-
+   
         // POST: api/Requests
         [ResponseType(typeof(Request))]
         public IHttpActionResult PostRequest(Request request)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             db.Requests.Add(request);
             db.SaveChanges();
-
             return CreatedAtRoute("DefaultApi", new { id = request.Id }, request);
         }
+
+        [HttpPost]
+        [Route("api/Requests/Create")]
+        public IHttpActionResult CreateRequest(int sentId,int receiveId,int bookId,DateTime date,RequestStaus requestStaus)
+        {
+            var resultRequests= db.Requests.Add(new Request { SenderId = sentId, RecieverId = receiveId, BookId = bookId, DateOfMessage = date });
+            db.SaveChanges();
+            if(resultRequests==null)
+            {
+                return NotFound();
+            }
+            return Ok(resultRequests);
+
+        }
+
+
+        [HttpPost]
+        [Route("api/Requests")]
+        public IHttpActionResult CreateRequest2(int sentId, int receiveId, int bookId)
+        {
+            
+            var resultRequests = db.Requests.Add(new Request { SenderId = sentId, RecieverId = receiveId, BookId = bookId, DateOfMessage = DateTime.Now,RequestStatusId = RequestStatusEnum.Requested });
+            db.SaveChanges();
+            if (resultRequests == null)
+            {
+                return NotFound();
+            }
+            return Ok(resultRequests);
+
+        }
+
+        [HttpPut]
+        [Route("api/Requests/Accept")]
+        public IHttpActionResult CreateAcceptReq(int id)
+        {
+
+            var resultRequests = db.Requests.Where(ww => ww.Id == id).FirstOrDefault();
+            if (resultRequests == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                resultRequests.RequestStatusId = RequestStatusEnum.Accepted;
+                db.Entry(resultRequests).State = EntityState.Modified;
+                return Ok(resultRequests);
+            }
+        }
+
+        [HttpPut]
+        [Route("api/Requests/Refuse")]
+        public IHttpActionResult CreateRefuseReq(int id)
+        {
+            var resultrequest = db.Requests.Where(ww => ww.Id == id).FirstOrDefault();
+            if(resultrequest==null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                resultrequest.RequestStatusId = RequestStatusEnum.Refused;
+                db.Entry(resultrequest).State = EntityState.Modified;
+                return Ok(resultrequest);
+            }
+        }
+
+        [HttpPut]
+        [Route("api/Requests/AcceptSwap")]
+        public IHttpActionResult CreateAcceptSwapReq(int id)
+        {
+            var resultRequest = db.Requests.Where(ww => ww.Id == id).FirstOrDefault();
+            if(resultRequest==null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                resultRequest.RequestStatusId = RequestStatusEnum.AcceptSwap;
+                db.Entry(resultRequest).State = EntityState.Modified;
+                return Ok(resultRequest);
+            }
+
+        }
+
+        [HttpPut]
+        [Route("api/Requests/RequestSwap")]
+        public IHttpActionResult CreateRequest6(int id)
+        {
+            var resultRequest = db.Requests.Where(ww => ww.Id == id).FirstOrDefault();
+            if(resultRequest==null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                resultRequest.RequestStatusId = RequestStatusEnum.RequestSwap;
+                db.Entry(resultRequest).State = EntityState.Modified;
+                return Ok(resultRequest);
+            }
+        }
+
 
         // DELETE: api/Requests/5
         [ResponseType(typeof(Request))]
@@ -192,3 +286,5 @@ namespace Final_Project_Code_First.Controllers
         }
     }
 }
+
+

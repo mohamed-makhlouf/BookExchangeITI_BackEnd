@@ -25,6 +25,8 @@ namespace Final_Project_Code_First.Models
         [DataType("nvarchar(max)")]
         [Required]
         public string Author_Name { get; set; }
+        public string Description { get; set; }
+
         [JsonIgnore]
         //Navigation
         public virtual ICollection<Genre> Genres { get; set; }

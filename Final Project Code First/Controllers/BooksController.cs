@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Security.Claims;
 using Final_Project_Code_First.Models;
 
 namespace Final_Project_Code_First.Controllers
@@ -18,8 +19,11 @@ namespace Final_Project_Code_First.Controllers
         private BookExchangeModel db = new BookExchangeModel();
 
         // GET: api/Books
+        //[Authorize(Roles = "Admin")]
         public IHttpActionResult GetBooks()
         {
+            var userIdentity = User.Identity as ClaimsIdentity;
+            var loggenInId = userIdentity.Claims.Where(claim => claim.Type.Equals("LoggenInUserId")).FirstOrDefault().Value;
             var books = db.Books.ToList();
             if(books==null)
             {

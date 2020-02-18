@@ -12,6 +12,8 @@ using Final_Project_Code_First.Models;
 
 namespace Users.Controllers
 {
+
+    [Authorize(Roles ="Adminstrator")]
     public class UserController : ApiController
     {
         private BookExchangeModel db = new BookExchangeModel();
@@ -24,10 +26,7 @@ namespace Users.Controllers
         {
             int pageSize = 20;
             var user = db.Users.OrderBy(ww => ww.UserId).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList().Select(ww => new { ww.FirstName, ww.LastName, ww.Address, ww.Rate });
-            //if (user== null)
-            //{
-            //    return NotFound();
-            //}
+          
             return Ok(user);
         }
         // GETById
