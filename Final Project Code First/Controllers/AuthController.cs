@@ -13,6 +13,7 @@ namespace Final_Project_Code_First.Controllers
 {
     public class AuthController : ApiController
     {
+
         private BookExchangeModel db = new BookExchangeModel();
 
 
@@ -45,6 +46,7 @@ namespace Final_Project_Code_First.Controllers
                 
                 );
             
+            
             return Ok(new JwtSecurityTokenHandler().WriteToken(token));
             //return Ok("hello from api");
         }
@@ -53,13 +55,13 @@ namespace Final_Project_Code_First.Controllers
         [Route("api/Auth/Login")]
         public IHttpActionResult PostLogin(string email,string password)
         {
-            var user = db.Users.Where(ww => ww.Email == email && ww.Password == password).ToList();
-            if (user.Count == 0)
+            var user = db.Users.Where(ww => ww.Email == email && ww.Password == password).FirstOrDefault();
+            if (user == null)
             {
                 return NotFound();
             }
             else
-                return Ok(user);
+                return Ok(generateTokenForUser(user));
         }
 
 
@@ -74,5 +76,36 @@ namespace Final_Project_Code_First.Controllers
             db.SaveChanges();
             return Ok(u);
         }
+        public string generateTokenForUser(User user)
+        {
+            // Create Security Key
+            string securityKey = "This My Security key made by Mohamed Makhlouf ";
+            //Symetric Key
+            var key = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKey));
+
+            //var symmetricSecuritykey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKey));
+            ////signingCredintals
+            var signingCredintals = new Microsoft.IdentityModel.Tokens.SigningCredentials(key, Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256Signature);
+            //var signingCredintals = new SigningCredentials(symmetricSecuritykey, SecurityAlgorithms.HmacSha256Signature);
+
+            //AddClaims
+            List<Claim> claims = new List<Claim>();
+           // claims.Add(new Claim(ClaimTypes.Role, user.));
+            claims.Add(new Claim(ClaimTypes.Role, "User"));
+            claims.Add(new Claim("LogUserId", user.UserId.ToString()));
+
+            ////Create token
+            var token = new JwtSecurityToken(
+                issuer: "smesk.in",
+                audience: "readers",
+                expires: DateTime.Now.AddHours(1),
+                signingCredentials: signingCredintals,
+                claims: claims
+
+                );
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
     }
+
+   
 }

@@ -31,6 +31,7 @@ namespace Final_Project_Code_First.Models
         public DbSet<Genre> Genres { get; set; }
        
         public DbSet<User> Users { get; set; }
+        public DbSet<UserRoleTable> userRoleTables { get; set; }
         public DbSet<BookCondition> BookConditions { get; set; }
         public DbSet<UserHaveBook> UserHaveBooks { get; set; }
         // public DbSet<UserWantBook> UserWantBooks { get; set; }

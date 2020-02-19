@@ -76,7 +76,28 @@ namespace Final_Project_Code_First.Models
         public virtual ICollection<Rating>  SentedRates{ get; set; }
         [InverseProperty("RateRatedUser")]
         public virtual ICollection<Rating>  ReceivedRates { get; set; }
+        [Required]
+        [Column("User_Role_Id")]
+        public UserRole Role { get; set; }
+
+        public virtual UserRoleTable UserRole { get; set; }
 
 
+    }
+    public enum UserRole
+    {
+        Admin = 0,
+        User = 1
+    }
+    [Table("User_Role")]
+    public class UserRoleTable
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public UserRole Id { get; set; }
+
+        [Required]
+        [DataType("nvarchar(max)")]
+        public string Name { get; set; }
     }
 }

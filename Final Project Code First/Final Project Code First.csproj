@@ -253,6 +253,10 @@
     <Compile Include="Migrations\202002190758343_fix rating table.designer.cs">
       <DependentUpon>202002190758343_fix rating table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002190853073_Add User Role.cs" />
+    <Compile Include="Migrations\202002190853073_Add User Role.designer.cs">
+      <DependentUpon>202002190853073_Add User Role.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookCondition.cs" />
@@ -370,6 +374,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002190758343_fix rating table.resx">
       <DependentUpon>202002190758343_fix rating table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002190853073_Add User Role.resx">
+      <DependentUpon>202002190853073_Add User Role.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
