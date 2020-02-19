@@ -249,6 +249,10 @@
     <Compile Include="Migrations\202002181702414_fix.designer.cs">
       <DependentUpon>202002181702414_fix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002190758343_fix rating table.cs" />
+    <Compile Include="Migrations\202002190758343_fix rating table.designer.cs">
+      <DependentUpon>202002190758343_fix rating table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookCondition.cs" />
@@ -363,6 +367,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002181702414_fix.resx">
       <DependentUpon>202002181702414_fix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002190758343_fix rating table.resx">
+      <DependentUpon>202002190758343_fix rating table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
