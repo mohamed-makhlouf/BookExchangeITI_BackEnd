@@ -72,6 +72,10 @@ namespace Final_Project_Code_First.Models
         [JsonIgnore]
 
         public virtual ICollection<Request> RecievedRequests { get; set; }
+        [InverseProperty("RateSenderUser")]
+        public virtual ICollection<Rating>  SentedRates{ get; set; }
+        [InverseProperty("RateRatedUser")]
+        public virtual ICollection<Rating>  ReceivedRates { get; set; }
 
 
     }

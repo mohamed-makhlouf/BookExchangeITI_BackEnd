@@ -21,6 +21,10 @@ namespace Final_Project_Code_First.Models
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Book>().Property(book => book.Rate).HasPrecision(5, 3);
             modelBuilder.Entity<User>().Property(user => user.Rate).HasPrecision(5, 3);
+            modelBuilder.Entity<User>()
+                .HasMany(ww => ww.UserWantBooks)
+                .WithMany(ss => ss.UserWantBooks)
+                .Map(ee => ee.ToTable("User_Want_Book"));
 
         }
         public DbSet<Book> Books { get; set; }
@@ -36,6 +40,8 @@ namespace Final_Project_Code_First.Models
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Report> Reports { get; set; }
 
+        public DbSet<Rating> Ratings { get; set; }
+        
 
     }
 
