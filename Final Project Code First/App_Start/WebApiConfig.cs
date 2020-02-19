@@ -21,9 +21,11 @@ namespace Final_Project_Code_First
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
             //Enable Cors for Images Photos
-            config.EnableCors(new EnableCorsAttribute("http://localhost:52558/", headers: "*", methods: "*"));
+            //config.EnableCors(new EnableCorsAttribute("http://localhost:4200/", headers: "*", methods: "*"));
+            //config.EnableCors(new EnableCorsAttribute("http://localhost:52558/", headers: "*", methods: "*"));
 
-            //
+            //Enable Cors form Angular
+
 
             // Web API routes
             config.MapHttpAttributeRoutes();

@@ -14,7 +14,8 @@ namespace Final_Project_Code_First
 {
     public class Startup1
     {
-        string securityKey = "This My Security key made by ";
+        string securityKey = "//OUR_GRAD_PROJECT_1234!@#123456";
+        //OUE_GRAD_PROJECT_KEY";
 
         public void Configuration(IAppBuilder app)
         {

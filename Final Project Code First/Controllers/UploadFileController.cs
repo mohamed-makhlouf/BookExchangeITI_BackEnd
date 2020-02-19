@@ -14,12 +14,18 @@ namespace FileUpload.Controllers
     {
         private BookExchangeModel _BookDb = new BookExchangeModel();
         
-        public HttpResponseMessage Post(int bookId,string title,int rate,string authName)
+        public HttpResponseMessage Post()
         {
             HttpResponseMessage result = null;
             //var bookResult= _BookDb.Books.Where(ww=>ww.Book_Id==id)
+
             var httpRequest = HttpContext.Current.Request;
             var name = HttpContext.Current.Request.Form.Get("name");
+
+            int bookId = int.Parse(HttpContext.Current.Request.Form.Get("bookId"));
+            string title = HttpContext.Current.Request.Form.Get("title");
+            int rate= int.Parse(HttpContext.Current.Request.Form.Get("rate"));
+            string authName= HttpContext.Current.Request.Form.Get("authName");
             if (httpRequest.Files.Count > 0)
             {
                 var filePath = "";

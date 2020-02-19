@@ -8,12 +8,14 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Security.Claims;
 using Final_Project_Code_First.Models;
+using Final_Project_Code_First.Controllers;
 
 namespace Users.Controllers
 {
 
-    [Authorize(Roles ="Adminstrator")]
+    //[Authorize(Roles ="Admin")]
     public class UserController : ApiController
     {
         private BookExchangeModel db = new BookExchangeModel();
@@ -71,16 +73,19 @@ namespace Users.Controllers
 
         // PUT: api/User/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutUser(int id, User user)
+        [Authorize]
+        
+        public IHttpActionResult PutUser( User user)
         {
+            var currentId = UserUtilities.GetCurrentUserId(User);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != user.UserId)
+            if (currentId != user.UserId)
             {
-                return BadRequest();
+                return Unauthorized();
             }
 
             db.Entry(user).State = System.Data.Entity.EntityState.Modified;
@@ -91,7 +96,7 @@ namespace Users.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!UserExists(currentId))
                 {
                     return NotFound();
                 }

@@ -10,10 +10,11 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using System.Security.Claims;
 using Final_Project_Code_First.Models;
+using System.Web.Http.Cors;
 
 namespace Final_Project_Code_First.Controllers
 {
-
+    //[EnableCors(origins:"http://")]
     public class BooksController : ApiController
     {
         private BookExchangeModel db = new BookExchangeModel();
@@ -22,9 +23,9 @@ namespace Final_Project_Code_First.Controllers
         //[Authorize(Roles = "Admin")]
         public IHttpActionResult GetBooks()
         {
-            var userIdentity = User.Identity as ClaimsIdentity;
-            var loggenInId = userIdentity.Claims.Where(claim => claim.Type.Equals("LoggenInUserId")).FirstOrDefault().Value;
-            var books = db.Books.ToList();
+            //var userIdentity = User.Identity as ClaimsIdentity;
+            //var loggenInId = userIdentity.Claims.Where(claim => claim.Type.Equals("LoggenInUserId")).FirstOrDefault().Value;
+            var books = db.Books.Take(10).ToList();
             if(books==null)
             {
                 return NotFound();
@@ -90,6 +91,7 @@ namespace Final_Project_Code_First.Controllers
 
         // PUT: api/Books/5
         [ResponseType(typeof(void))]
+        [Authorize]
         public IHttpActionResult PutBook(int id, Book book)
         {
             if (!ModelState.IsValid)
@@ -125,21 +127,42 @@ namespace Final_Project_Code_First.Controllers
 
         // POST: api/Books
         [ResponseType(typeof(Book))]
+        //[Authorize(Roles = "Admin")]
         public IHttpActionResult PostBook(Book book)
         {
+
+           var LoggedInUserId = UserUtilities.GetCurrentUserId(User);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
             db.Books.Add(book);
-            db.SaveChanges();
+            if (book.Want.Equals("have"))
+            {
+                db.UserHaveBooks.Add(new UserHaveBook() { UserId = LoggedInUserId, BookId = book.Book_Id,BookConditionId=BookConditionEnum.New });
+            }else if (book.Want.Equals("want"))
+            {
+
+                var user = db.Users.Where(user2 => user2.UserId == LoggedInUserId).FirstOrDefault();
+                //book.UserWantBooks.Add(user);
+            }
+
+            try
+            {
+                db.SaveChanges();
+
+            }
+            catch (Exception e)
+            {
+                return Ok(e.Message);   
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = book.Book_Id }, book);
         }
 
         // DELETE: api/Books/5
         [ResponseType(typeof(Book))]
+        [Authorize]
         public IHttpActionResult DeleteBook(int id)
         {
             Book book = db.Books.Find(id);
