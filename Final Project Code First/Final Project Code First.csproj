@@ -226,6 +226,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\RequestsController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UploadFileController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -257,6 +258,10 @@
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\Report.cs" />
     <Compile Include="Models\Request.cs" />
+    <Compile Include="Models\Search\Google\GoogleSearchImp.cs" />
+    <Compile Include="Models\Search\Google\GoogleSearchResponse.cs" />
+    <Compile Include="Models\Search\ISearch.cs" />
+    <Compile Include="Models\Search\MapperForSearch.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserHaveBook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
