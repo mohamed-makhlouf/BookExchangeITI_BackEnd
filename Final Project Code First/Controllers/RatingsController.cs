@@ -21,15 +21,21 @@ namespace Final_Project_Code_First.Controllers
         // GET: api/Ratings/5
         [ResponseType(typeof(Rating))]
         [Route("api/Ratings/")]
-        public IHttpActionResult GetRating(int id)
+        public IHttpActionResult GetRating(int ratedUerId)
         {
-            var rating = db.Ratings.Where(ww => ww.Id == id).Select(ww => new { ww.Rate, ww.RateRatedUser, ww.RateSenderUser });
-            if(rating.Count()==0)
+            var rating = db.Ratings.Where(ww => ww.RatedUserId == ratedUerId).Select(ww => ww.Rate).Sum();
+            var noOfUSers = db.Ratings.Where(ww => ww.RatedUserId == ratedUerId).Count();
+            if(noOfUSers != 0)
             {
-                return NotFound();
+                var rate = rating / noOfUSers;
+                return Ok(rate);
+           
             }
-            var avgRatings = rating.Count() / 3;
-            return Ok(avgRatings);
+            else
+            {
+                return Ok(0);
+            }
+            
         }
 
         // PUT: api/Ratings/5

@@ -36,7 +36,14 @@
                     .OfType<BookConditionEnum>()
                     .Select(x=> new BookCondition { Id = x , Name = x.ToString() })
                     .ToArray()
-            ); ;
+            );
+            context.userRoleTables.AddOrUpdate(x => x.Id,
+                Enum.GetValues(typeof(UserRole))
+                    .OfType<UserRole>()
+                    .Select(x => new UserRoleTable { Id = x, Name = x.ToString() })
+                    .ToArray()
+            );
+
         }
     }
 }
