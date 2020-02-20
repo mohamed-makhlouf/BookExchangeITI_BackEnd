@@ -26,6 +26,7 @@ namespace CatagoryAPI.Controllers
         // GET: api/Genres/5
         [ResponseType(typeof(Genre))]
         [HttpGet]
+        [Route("api/Genres/{id:int}")]
         public IHttpActionResult GetGenreById(int id)
         {
 
@@ -34,7 +35,7 @@ namespace CatagoryAPI.Controllers
             {
                 return NotFound();
             }
-            var books = db.Genres.First(ww => ww.Genre_Id == id).Books.Select(ww => new { ww.Title });
+            var books = db.Genres.Where(ww => ww.Genre_Id == id).Select(ww => ww.Books).ToList();
             return Ok(books);
         }
 
@@ -53,15 +54,12 @@ namespace CatagoryAPI.Controllers
 
         [ResponseType(typeof(void))]
         [HttpGet]
-        [Route("api/Genres/Pages")]
-        public IHttpActionResult GetGenresPages(int number)
+        [Route("api/Genres/Pages/{PageNumber:int,pagSize:int}")]
+        public IHttpActionResult GetGenresPages(int PageNumber, int pagSize)
         {
-
-            int pagSize = 10;
             //var genrenumbers=db.Genres.Select(ww => new { ww.Genre_Id, ww.Genre_Name }).ToList();
-            var genre = db.Genres.OrderBy(ww => ww.Genre_Id).Skip((number - 1) * pagSize).Take(pagSize).ToList().Select(ww => new { ww.Genre_Name, ww.Genre_Id });
+            var genre = db.Genres.OrderBy(ww => ww.Genre_Id).Skip((PageNumber - 1) * pagSize).Take(pagSize).ToList().Select(ww => new { ww.Genre_Name, ww.Genre_Id });
             return Ok(genre);
-
         }
         // PUT: api/Genres/5
         [ResponseType(typeof(void))]

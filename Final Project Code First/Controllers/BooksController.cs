@@ -51,7 +51,7 @@ namespace Final_Project_Code_First.Controllers
         //GetAll
         [ResponseType(typeof(Book))]
         [HttpGet]
-        [Route("api/Books/page/{pageNumber:int}")]
+        [Route("api/Books/page/{pageNumber:int,pageSize:int}")]
         public IHttpActionResult GetAllByPageNo(int pageNumber,int pageSize)
         {
             var book = db.Books.OrderBy(ww => ww.Author_Name).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList().Select(ww => new { ww.Author_Name, ww.Title, ww.Rate});

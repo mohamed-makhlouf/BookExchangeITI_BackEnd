@@ -24,11 +24,9 @@ namespace Users.Controllers
         [ResponseType(typeof(User))]
         [HttpGet]
         [Route("api/User/page/{pageNumber:int}")]
-        public IHttpActionResult GetAllByPageNo(int pageNumber)
-        {
-            int pageSize = 20;
+        public IHttpActionResult GetAllByPageNo(int pageNumber, int pageSize)
+        {     
             var user = db.Users.OrderBy(ww => ww.UserId).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList().Select(ww => new { ww.FirstName, ww.LastName, ww.Address, ww.Rate });
-          
             return Ok(user);
         }
         // GETById
@@ -53,7 +51,6 @@ namespace Users.Controllers
         //GETByname
         [Route("api/User/{name:alpha}")]
         [ResponseType(typeof(User))]
-
         public IHttpActionResult GetUserByName(string name, string type)
         {
             var query = db.Users.Where(ww => (ww.FirstName + ww.LastName).Contains(name)).ToList();
@@ -158,11 +155,13 @@ namespace Users.Controllers
             //var user = db.User_Book.Where(ww => ww.User_Id == id && ww.Want == false).Select(ww => new { ww.User.First_Name, ww.User.Last_Name, ww.Book.Title }).ToList();
             //var user = db.Users.Where(ww => ww.UserId == id).Select(ww => new { ww.FirstName, ww.LastName, ww.UserHaveBooks }).ToList();
             //var books = db.Users.Include("Book").Where(user => user.UserId == id).Select(user => user.UserHaveBooks);
+            
             var books = db.UserHaveBooks.Include("Book").Where(user => user.UserId == id).Select(uhb=> uhb.Book).ToList();
             //if (user.Count == 0)
             //{
             //    return NotFound();
             //}
+            
             return Ok(books);
         }
         private bool UserExists(int id)
