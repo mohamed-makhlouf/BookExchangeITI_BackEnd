@@ -16,8 +16,6 @@ namespace Final_Project_Code_First.Controllers
     {
         private BookExchangeModel db = new BookExchangeModel();
 
-       
-
         // GET: api/Ratings/5
         [ResponseType(typeof(Rating))]
         [Route("api/Ratings/")]
