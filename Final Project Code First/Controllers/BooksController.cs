@@ -130,7 +130,7 @@ namespace Final_Project_Code_First.Controllers
         //[Authorize(Roles = "Admin")]
         public IHttpActionResult PostBook(Book book)
         {
-
+            book.Rate = 0;
            var LoggedInUserId = UserUtilities.GetCurrentUserId(User);
             if (!ModelState.IsValid)
             {
