@@ -48,14 +48,12 @@ namespace Final_Project_Code_First.Controllers
 
             return Ok(book);
         }
-
         //GetAll
         [ResponseType(typeof(Book))]
         [HttpGet]
-        [Route("api/Books/page/{pageNumber:int}")]
-        public IHttpActionResult GetAllByPageNo(int pageNumber)
+        [Route("api/Books/page")]
+        public IHttpActionResult GetAllByPageNo(int pageNumber,int pageSize)
         {
-            int pageSize = 10;
             var book = db.Books.OrderBy(ww => ww.Author_Name).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList().Select(ww => new { ww.Author_Name, ww.Title, ww.Rate});
             if(book==null)
             {
@@ -63,7 +61,6 @@ namespace Final_Project_Code_First.Controllers
             }
             return Ok(book);
         }
-
         [ResponseType(typeof(Book))]
         [Route("api/Books/GetBookByAuthor/{auth_name:alpha}")]
         public IHttpActionResult GetBookByAuthor(string auth_name)
