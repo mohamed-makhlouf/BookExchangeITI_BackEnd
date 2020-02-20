@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,6 +22,7 @@ namespace Final_Project_Code_First.Models
         public BookConditionEnum BookConditionId { get; set; }
         //Navigation
         public BookCondition BookCondition { get; set; }
+        [JsonIgnore]
         public User User { get; set; }
         public Book Book { get; set; }
 

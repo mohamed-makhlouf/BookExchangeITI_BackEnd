@@ -271,6 +271,10 @@
     <Compile Include="Migrations\202002192154520_added_UserWantBookTable.designer.cs">
       <DependentUpon>202002192154520_added_UserWantBookTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002192310562_fix_uer_role_3.cs" />
+    <Compile Include="Migrations\202002192310562_fix_uer_role_3.designer.cs">
+      <DependentUpon>202002192310562_fix_uer_role_3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActionParameters\LoginParameter.cs" />
     <Compile Include="Models\Book.cs" />
@@ -402,6 +406,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002192154520_added_UserWantBookTable.resx">
       <DependentUpon>202002192154520_added_UserWantBookTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002192310562_fix_uer_role_3.resx">
+      <DependentUpon>202002192310562_fix_uer_role_3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

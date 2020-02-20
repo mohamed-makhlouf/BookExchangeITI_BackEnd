@@ -142,12 +142,13 @@ namespace Users.Controllers
         [Route("api/user/want/{id:int}")]
         public IHttpActionResult GetWantedBooks(int id)
         {
-            var user = db.Users.Where(ww => ww.UserId == id ).Select(ww => new { ww.FirstName, ww.LastName, ww.UserWantBooks}).ToList();
-            if (user.Count == 0)
-            {
-                return NotFound();
-            }
-            return Ok(user);
+            //var user = db.Users.Where(ww => ww.UserId == id ).Select(ww => new { ww.FirstName, ww.LastName, ww.UserWantBooks}).ToList();
+            var books = db.UserWantBooks.Where(ww => ww.UserId == id).OrderByDescending(ww => ww.DateBookAdded).Select(ww => ww.Book).ToList();
+            //if (user.Count == 0)
+            //{
+            //    return NotFound();
+            //}
+            return Ok(books);
         }
         [ResponseType(typeof(User))]
         [HttpGet]
@@ -155,13 +156,14 @@ namespace Users.Controllers
         public IHttpActionResult GetHavingBooks(int id)
         {
             //var user = db.User_Book.Where(ww => ww.User_Id == id && ww.Want == false).Select(ww => new { ww.User.First_Name, ww.User.Last_Name, ww.Book.Title }).ToList();
-            var user = db.Users.Where(ww => ww.UserId == id).Select(ww => new { ww.FirstName, ww.LastName, ww.UserHaveBooks }).ToList();
-
-            if (user.Count == 0)
-            {
-                return NotFound();
-            }
-            return Ok(user);
+            //var user = db.Users.Where(ww => ww.UserId == id).Select(ww => new { ww.FirstName, ww.LastName, ww.UserHaveBooks }).ToList();
+            //var books = db.Users.Include("Book").Where(user => user.UserId == id).Select(user => user.UserHaveBooks);
+            var books = db.UserHaveBooks.Include("Book").Where(user => user.UserId == id).Select(uhb=> uhb.Book).ToList();
+            //if (user.Count == 0)
+            //{
+            //    return NotFound();
+            //}
+            return Ok(books);
         }
         private bool UserExists(int id)
         {

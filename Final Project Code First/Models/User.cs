@@ -78,7 +78,7 @@ namespace Final_Project_Code_First.Models
         public virtual ICollection<Rating>  ReceivedRates { get; set; }
         [Required]
         [Column("User_Role_Id")]
-        //[ForeignKey("User_Role")]
+        //[ForeignKey("UserRole")]
         public UserRole Role { get; set; }
         [ForeignKey("Role")]
         public virtual UserRoleTable UserRole { get; set; }
