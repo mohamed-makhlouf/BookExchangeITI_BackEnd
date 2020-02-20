@@ -223,6 +223,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\AuthentController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
+    <Compile Include="Controllers\GenresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\RequestsController.cs" />

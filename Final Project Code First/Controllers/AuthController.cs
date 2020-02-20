@@ -61,6 +61,7 @@ namespace Final_Project_Code_First.Controllers
                 return NotFound();
             }
             else
+
                 return Ok(generateTokenForUser(user));
         }
 
@@ -91,9 +92,9 @@ namespace Final_Project_Code_First.Controllers
             //AddClaims
             List<Claim> claims = new List<Claim>();
            // claims.Add(new Claim(ClaimTypes.Role, user.));
-            claims.Add(new Claim(ClaimTypes.Role, "User"));
+            claims.Add(new Claim(ClaimTypes.Role, user.Role.ToString()));
             claims.Add(new Claim("LogUserId", user.UserId.ToString()));
-
+            
             ////Create token
             var token = new JwtSecurityToken(
                 issuer: "smesk.in",
@@ -101,11 +102,8 @@ namespace Final_Project_Code_First.Controllers
                 expires: DateTime.Now.AddHours(1),
                 signingCredentials: signingCredintals,
                 claims: claims
-
-                );
+            );
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-    }
-
-   
+    }   
 }

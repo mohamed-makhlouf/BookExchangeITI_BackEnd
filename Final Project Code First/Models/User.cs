@@ -82,7 +82,6 @@ namespace Final_Project_Code_First.Models
 
         public virtual UserRoleTable UserRole { get; set; }
 
-
     }
     public enum UserRole
     {
@@ -95,7 +94,6 @@ namespace Final_Project_Code_First.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public UserRole Id { get; set; }
-
         [Required]
         [DataType("nvarchar(max)")]
         public string Name { get; set; }
