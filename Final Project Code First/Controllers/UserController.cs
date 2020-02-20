@@ -150,7 +150,7 @@ namespace Users.Controllers
         [ResponseType(typeof(User))]
         [HttpGet]
         [Route("api/user/having/{id:int}")]
-        public IHttpActionResult GetHavingBooks(int id)
+        public IHttpActionResult GetHavingBooks(int id, int PageNumber, int pagSize)
         {
             //var user = db.User_Book.Where(ww => ww.User_Id == id && ww.Want == false).Select(ww => new { ww.User.First_Name, ww.User.Last_Name, ww.Book.Title }).ToList();
             //var user = db.Users.Where(ww => ww.UserId == id).Select(ww => new { ww.FirstName, ww.LastName, ww.UserHaveBooks }).ToList();

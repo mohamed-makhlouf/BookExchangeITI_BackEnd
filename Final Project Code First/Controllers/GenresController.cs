@@ -54,7 +54,7 @@ namespace CatagoryAPI.Controllers
 
         [ResponseType(typeof(void))]
         [HttpGet]
-        [Route("api/Genres/Pages/{PageNumber:int,pagSize:int}")]
+        [Route("api/Genres/Pages")]
         public IHttpActionResult GetGenresPages(int PageNumber, int pagSize)
         {
             //var genrenumbers=db.Genres.Select(ww => new { ww.Genre_Id, ww.Genre_Name }).ToList();
