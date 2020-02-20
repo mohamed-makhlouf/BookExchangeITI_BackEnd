@@ -11,14 +11,18 @@ namespace Final_Project_Code_First.Models
     [Table("Book")]
     public class Book
     {
+        public Book()
+        {
+            //UserWantBooks = new HashSet<UserWantBook>();
+        }
         [Key]
         public int Book_Id { get; set; }
         [DataType("nvarchar(MAX)")]
         [Required]
         public string Title { get; set; }
         [DataType("decimal(5,3)")]
-        [Required]
-        public decimal Rate { get; set; }
+        //[Required]
+        public decimal? Rate { get; set; }
         [DataType(DataType.ImageUrl)]
         [Required]
         public string Photo_Url { get; set; }
@@ -32,8 +36,16 @@ namespace Final_Project_Code_First.Models
         public virtual ICollection<Genre> Genres { get; set; }
         [JsonIgnore]
         public virtual ICollection<UserHaveBook> UserHaveBooks { get; set; }
-        [InverseProperty("UserWantBooks")]
         [JsonIgnore]
-        public virtual ICollection<User> UserWantBooks { get; set; }
+        public virtual ICollection<UserWantBook> UserWantBooks { get; set; }
+        //[InverseProperty("UserWantBooks")]
+        //[JsonIgnore]
+        //public virtual ICollection<User> UserWantBooks { get; set; }
+
+
+        //parameter
+        [NotMapped]
+        [Required]
+        public String Want { get; set; }
     }
 }
