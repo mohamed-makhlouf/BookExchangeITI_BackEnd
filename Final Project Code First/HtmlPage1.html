@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/jquery-3.4.1.js"></script>
+    <script src="Scripts/jquery.signalR-2.2.2.js"></script>
+    <script src="signalr/hubs"></script>
+    <script>
+
+        $(function () {
+            //hub
+            name = prompt("enter your name");
+
+             chathub = $.connection.chat;
+            $.connection.hub.start(); 
+
+            chathub.client.newMessage = function (n , m)
+            {
+                $("#mess").append("<li>" + n + " : " + m + "</li>");
+
+            }
+        })
+        
+
+        //start connection
+
+        //send
+
+        function send()
+        {
+
+            chathub.server.sendMessage(name, $("#txt").val())
+        }
+
+        //receive
+
+    </script>
+</head>
+<body>
+
+    <input type="text" id="txt"/>
+    <input type="button" value="send" onclick="send()"/>
+    <ul id="mess">
+
+    </ul>
+
+</body>
+</html>
