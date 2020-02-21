@@ -55,10 +55,12 @@ namespace CatagoryAPI.Controllers
         [ResponseType(typeof(void))]
         [HttpGet]
         [Route("api/Genres/Pages")]
-        public IHttpActionResult GetGenresPages(int PageNumber, int pagSize)
+        public IHttpActionResult GetGenresPages(int PageNumber, int pagSize,string PageType)
         {
             //var genrenumbers=db.Genres.Select(ww => new { ww.Genre_Id, ww.Genre_Name }).ToList();
+            
             var genre = db.Genres.OrderBy(ww => ww.Genre_Id).Skip((PageNumber - 1) * pagSize).Take(pagSize).ToList().Select(ww => new { ww.Genre_Name, ww.Genre_Id });
+            
             return Ok(genre);
         }
         // PUT: api/Genres/5
