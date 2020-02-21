@@ -20,6 +20,8 @@ namespace Final_Project_Code_First.Models
         [Required]
         [Column("Book_Condtion")]
         public BookConditionEnum BookConditionId { get; set; }
+        [DataType(DataType.DateTime)]
+        public DateTime DateOfAdded { get; set; }
         //Navigation
         public BookCondition BookCondition { get; set; }
         [JsonIgnore]

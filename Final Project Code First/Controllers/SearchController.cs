@@ -44,5 +44,18 @@ namespace Final_Project_Code_First.Controllers
 
             return Ok(book);
         }
+        [HttpGet]
+        [Route("api/user/search/have")]
+        public IHttpActionResult GetSearchByNameForUser(int userId,string bookTitle)
+        {
+            var books = db
+                .UserHaveBooks
+                .Where(uhb => uhb.UserId == userId && uhb.Book.Title.Contains(bookTitle))
+                .OrderBy(uhb => uhb.Book.Title)
+                .Select(uhb => uhb.Book)
+                .ToList();
+            return Ok(books);
+        }
+
     }
 }
