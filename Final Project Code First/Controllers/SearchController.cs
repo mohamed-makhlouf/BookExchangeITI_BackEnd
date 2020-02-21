@@ -19,6 +19,7 @@ namespace Final_Project_Code_First.Controllers
         public IHttpActionResult GetSearchByName([FromUri]string name)
         {
             var book = db.Books.Where(BB => BB.Title.Contains(name)).ToList();
+
             if (book.Count == 0)
             {
                 var books = googleSearch.SearchByName(name);
@@ -44,5 +45,18 @@ namespace Final_Project_Code_First.Controllers
 
             return Ok(book);
         }
+        [HttpGet]
+        [Route("api/user/search/have")]
+        public IHttpActionResult GetSearchByNameForUser(int userId,string bookTitle)
+        {
+            var books = db
+                .UserHaveBooks
+                .Where(uhb => uhb.UserId == userId && uhb.Book.Title.Contains(bookTitle))
+                .OrderBy(uhb => uhb.Book.Title)
+                .Select(uhb => uhb.Book)
+                .ToList();
+            return Ok(books);
+        }
+
     }
 }
