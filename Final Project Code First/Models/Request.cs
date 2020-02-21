@@ -22,9 +22,18 @@ namespace Final_Project_Code_First.Models
         public bool? Swap { get; set; }
 
         // Navigation
-        [ForeignKey("Book")]
+        [ForeignKey("SendedBook")]
         public int BookId { get; set; }
-        public virtual Book Book { get; set; }
+        public virtual Book SendedBook { get; set; }
+        //[ForeignKey("SendedBook")]
+        //[Column("Sended_Book_Id")]
+        //public int SendedBookId { get; set; }
+        //public virtual Book SendedBook { get; set; }
+
+        [ForeignKey("RequestedBook")]
+        [Column("Requested_Book_Id")]
+        public int? RequestedBookId { get; set; }
+        public virtual Book RequestedBook { get; set; }
         [ForeignKey("SenderUser")]
         [Column("Request_Sender_Id")]
         public int? SenderId { get; set; }
@@ -34,10 +43,7 @@ namespace Final_Project_Code_First.Models
         public int? RecieverId { get; set; }
         public virtual User RecieverUser { get; set; }
 
-        internal static object CreateResponse(HttpStatusCode created)
-        {
-            throw new NotImplementedException();
-        }
+    
     }
     public enum RequestStatusEnum
     {
