@@ -57,14 +57,16 @@ namespace Final_Project_Code_First.Controllers
 
         [HttpGet]
         [Route("api/home/want")]
-        public IHttpActionResult GetWantedHaveBooks(int userId,int pageNumber,int pageSize)
+        public IHttpActionResult GetHaveBooks(int userId,int pageNumber,int pageSize)
         {
             
-            if (userId == null)
+            if (userId == -1)
             {
                 var count = db.UserHaveBooks
                .Count();
                 var books = db.UserHaveBooks
+                    .Include("Book")
+                    .Include("User")
                    .OrderByDescending(ww => ww.DateOfAdded)
                    .Skip((pageNumber - 1) * pageSize)
                    .Take(pageSize)
@@ -95,6 +97,8 @@ namespace Final_Project_Code_First.Controllers
                 var count = db.UserHaveBooks
               .Count();
                 var books = db.UserHaveBooks
+                     .Include("Book")
+                    .Include("User")
                     .Where(ww=> ww.UserId == userId)
                    .OrderByDescending(ww => ww.DateOfAdded)
                    .Skip((pageNumber - 1) * pageSize)
