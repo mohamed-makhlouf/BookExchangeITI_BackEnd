@@ -18,7 +18,7 @@ namespace CatagoryAPI.Controllers
         // GET: api/Genres
         public IHttpActionResult GetGenres()
         {
-            var geners = db.Genres.ToList().Select(ww => new { ww.Genre_Id, ww.Genre_Name });
+            var geners = db.Genres.ToList().Take(20).Select(ww => new { ww.Genre_Id, ww.Genre_Name });
             return Ok(geners);
         }
 
