@@ -21,7 +21,25 @@ namespace Final_Project_Code_First.Controllers
             var book = db.Books.Where(BB => BB.Title.Contains(name)).ToList();
             if (book.Count == 0)
             {
-                return Ok(googleSearch.SearchByName(name));
+                var books = googleSearch.SearchByName(name);
+                foreach (var item in books)
+                {
+                    if(item.Categories.Count != 0)
+                    {
+                        foreach (var item1 in item.Categories)
+                        {
+                            var cat = db.Genres.Where(c => c.Genre_Name == item1).FirstOrDefault();
+                            if(cat== null)
+                            {
+                                db.Genres.Add(new Genre() { Genre_Name = item1 });
+                            }
+                        
+                        }
+                    }
+                   
+                }
+                db.SaveChanges();
+                return Ok(books);
             }
 
             return Ok(book);

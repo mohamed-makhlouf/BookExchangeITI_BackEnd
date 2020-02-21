@@ -354,6 +354,7 @@
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\GenresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ModifiedRequestController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\RequestsController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
@@ -403,6 +404,14 @@
     <Compile Include="Migrations\202002192310562_fix_uer_role_3.cs" />
     <Compile Include="Migrations\202002192310562_fix_uer_role_3.designer.cs">
       <DependentUpon>202002192310562_fix_uer_role_3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002201743467_fixed_reuest_Table.cs" />
+    <Compile Include="Migrations\202002201743467_fixed_reuest_Table.designer.cs">
+      <DependentUpon>202002201743467_fixed_reuest_Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002201908169_fixed_reuest_Table2.cs" />
+    <Compile Include="Migrations\202002201908169_fixed_reuest_Table2.designer.cs">
+      <DependentUpon>202002201908169_fixed_reuest_Table2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActionParameters\LoginParameter.cs" />
@@ -541,6 +550,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002192310562_fix_uer_role_3.resx">
       <DependentUpon>202002192310562_fix_uer_role_3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002201743467_fixed_reuest_Table.resx">
+      <DependentUpon>202002201743467_fixed_reuest_Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002201908169_fixed_reuest_Table2.resx">
+      <DependentUpon>202002201908169_fixed_reuest_Table2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

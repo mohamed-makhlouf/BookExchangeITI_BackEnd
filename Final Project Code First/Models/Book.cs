@@ -14,6 +14,7 @@ namespace Final_Project_Code_First.Models
         public Book()
         {
             //UserWantBooks = new HashSet<UserWantBook>();
+            Categories = new List<string>();
         }
         [Key]
         public int Book_Id { get; set; }
@@ -41,11 +42,17 @@ namespace Final_Project_Code_First.Models
         //[InverseProperty("UserWantBooks")]
         //[JsonIgnore]
         //public virtual ICollection<User> UserWantBooks { get; set; }
+        [InverseProperty("SendedBook")]
+        public virtual ICollection<Request> SendedRequests { get; set; }
+        [InverseProperty("RequestedBook")]
+        public virtual ICollection<Request> RecievedRequests { get; set; }
 
 
         //parameter
         [NotMapped]
         [Required]
         public String Want { get; set; }
+        [NotMapped]
+        public IList<string> Categories { get; set; }
     }
 }

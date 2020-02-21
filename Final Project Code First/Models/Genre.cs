@@ -13,9 +13,9 @@ namespace Final_Project_Code_First.Models
     {
         [Key]
         public int Genre_Id { get; set; }
-        [DataType("nvarchar(Max)")]
-      
+        [DataType("nvarchar(100)")]
         [Required]
+   //     [Index(IsUnique = true)]
         public string Genre_Name { get; set; }
         [JsonIgnore]
         public ICollection<Book> Books { get; set; }
