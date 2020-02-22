@@ -10,12 +10,16 @@ namespace Final_Project_Code_First
     [HubName("chat")]
     public class ChatHub : Hub
     {
-        
-        public void sendMessage( string name,string message)
+        ChatEntities db = new ChatEntities();
+        public void sendMessage( int senderId,string message)
         {
-            //dbcode
-            Clients.All.newMessage(name , message);
 
+            //dbcode
+            Clients.All.newMessage(senderId, message);
+            Chat mess = new Chat() { ChatSenderUser_UserId = senderId, Message = message, Date_Of_Message = DateTime.Now };
+
+            db.Chats.Add(mess);
+            db.SaveChanges();
 
         }
        
