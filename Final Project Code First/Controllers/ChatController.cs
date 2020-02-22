@@ -27,6 +27,11 @@ namespace Final_Project_Code_First.Controllers
                         .Skip((page == 0 ? 1 : page) * 2)
                         .Take(2)
                         .ToList();
+            var chatsAll = GetChats()
+                          .Where(
+                chat => chat.ChatSenderUser.UserId == sender
+                || chat.ChatRecieverUser.UserId == sender)
+                          ;
 
 
             if (chats.Count == 0)
@@ -65,6 +70,23 @@ namespace Final_Project_Code_First.Controllers
                 return StatusCode(HttpStatusCode.NotAcceptable);
             }
             return Ok();
+        }
+        [HttpGet]
+        [Route("api/chat/getcurrentuserchat")]
+        public IHttpActionResult GetAllChatByLoggedInUser(int userId)
+        {
+            var chats = db.Chats
+                .Where(chat => chat.ChatSenderUser.UserId == userId
+                        || chat.ChatRecieverUser.UserId == userId)
+                .OrderByDescending(chat => chat.DateOfMessage)
+                .Select(chat => new
+                {
+                    chat.Message,
+                    SenderUser = new { chat.ChatSenderUser.FirstName, chat.ChatSenderUser.LastName },
+                    RecieverUSer = new { chat.ChatRecieverUser.FirstName, chat.ChatSenderUser.LastName }
+                }).ToList();
+
+           return Ok(chats);
         }
     }
 }
