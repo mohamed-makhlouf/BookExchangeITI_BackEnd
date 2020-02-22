@@ -153,8 +153,19 @@ namespace Final_Project_Code_First.Controllers
 
             request.DateOfMessage = DateTime.UtcNow;
             request.RequestStatusId = RequestStatusEnum.Requested;
-            db.Requests.Add(request);
-            db.SaveChanges();
+            var checkHaveBook = db.UserHaveBooks.Where(ww=>ww.BookId==request.BookId&&ww.UserId == request.SenderId).Select(ww => ww.BookId).ToList();
+            var checkWantBook = db.UserWantBooks.Where(ww => ww.BookId==request.BookId&&ww.UserId==request.RecieverId).Select(ww=>ww.BookId).ToList();
+            if(checkHaveBook.Count>=0&&checkWantBook.Count>=0)
+            {
+                db.Requests.Add(request);
+                db.SaveChanges();
+            }
+            else if(request.RequestStaus.Id!= RequestStatusEnum.Requested)
+            {
+                db.Requests.Add(request);
+                db.SaveChanges();
+            }
+
             return StatusCode(HttpStatusCode.Created);
         }
 
@@ -185,14 +196,12 @@ namespace Final_Project_Code_First.Controllers
                 return NotFound();
             }
             return Ok(resultRequests);
-
         }
 
         [HttpPut]
-        [Route("api/Requests/Accept")]
+        [Route("api/Request/Accept")]
         public IHttpActionResult CreateAcceptReq(int id)
         {
-
             var resultRequests = db.Requests.Where(ww => ww.Id == id).FirstOrDefault();
             if (resultRequests == null)
             {
@@ -207,7 +216,7 @@ namespace Final_Project_Code_First.Controllers
         }
 
         [HttpPut]
-        [Route("api/Requests/Refuse")]
+        [Route("api/Request/Refuse")]
         public IHttpActionResult CreateRefuseReq(int id)
         {
             var resultrequest = db.Requests.Where(ww => ww.Id == id).FirstOrDefault();
@@ -236,6 +245,24 @@ namespace Final_Project_Code_First.Controllers
             {
                 resultRequest.RequestStatusId = RequestStatusEnum.AcceptSwap;
                 db.Entry(resultRequest).State = EntityState.Modified;
+                var userHaveBookCheck = db.UserHaveBooks.Where(uhb => uhb.UserId == resultRequest.SenderId && uhb.BookId == resultRequest.BookId).FirstOrDefault();
+                if(userHaveBookCheck == null)
+                {
+                    return StatusCode(HttpStatusCode.NotAcceptable);
+                }
+                var userWantBookCheck = db.UserWantBooks.Where(uwb => uwb.UserId == resultRequest.RecieverId && uwb.BookId == resultRequest.RequestedBookId).FirstOrDefault();
+                if(userWantBookCheck == null)
+                {
+                    return StatusCode(HttpStatusCode.NotAcceptable);
+
+                }
+                var temp = new UserHaveBook() { BookId = userWantBookCheck.BookId, UserId = userWantBookCheck.UserId , BookConditionId = userHaveBookCheck.BookConditionId};
+                var temp2 = new UserWantBook() { BookId = userHaveBookCheck.BookId, UserId = userHaveBookCheck.UserId };
+                db.Entry(temp).State = EntityState.Added;
+                db.Entry(temp2).State = EntityState.Added;
+                db.Entry(userHaveBookCheck).State = EntityState.Deleted;
+                db.Entry(userWantBookCheck).State = EntityState.Deleted;
+                
                 return Ok(resultRequest);
             }
 
@@ -253,6 +280,7 @@ namespace Final_Project_Code_First.Controllers
             else
             {
                 resultRequest.RequestStatusId = RequestStatusEnum.RequestSwap;
+                
                 db.Entry(resultRequest).State = EntityState.Modified;
                 return Ok(resultRequest);
             }
