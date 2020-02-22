@@ -27,8 +27,6 @@ namespace Final_Project_Code_First.Controllers
                         .Skip((page == 0 ? 1 : page) * 2)
                         .Take(2)
                         .ToList();
-
-
             if (chats.Count == 0)
             {
                 return NotFound();
