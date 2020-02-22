@@ -144,14 +144,18 @@ namespace Final_Project_Code_First.Controllers
             }
             return StatusCode(HttpStatusCode.NoContent);
         }
-   
+        //Add Some Validation
         // POST: api/Requests
+        [Route("api/request/add")]
         [ResponseType(typeof(Request))]
         public IHttpActionResult PostRequest(Request request)
         {
+
+            request.DateOfMessage = DateTime.UtcNow;
+            request.RequestStatusId = RequestStatusEnum.Requested;
             db.Requests.Add(request);
             db.SaveChanges();
-            return CreatedAtRoute("DefaultApi", new { id = request.Id }, request);
+            return StatusCode(HttpStatusCode.Created);
         }
 
         [HttpPost]
