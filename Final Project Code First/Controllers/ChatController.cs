@@ -76,17 +76,65 @@ namespace Final_Project_Code_First.Controllers
         public IHttpActionResult GetAllChatByLoggedInUser(int userId)
         {
             var chats = db.Chats
-                .Where(chat => chat.ChatSenderUser.UserId == userId
-                        || chat.ChatRecieverUser.UserId == userId)
-                .OrderByDescending(chat => chat.DateOfMessage)
-                .Select(chat => new
+                .Where(chat => chat.ChatSenderUser.UserId == userId || chat.ChatRecieverUser.UserId == userId)
+                .GroupBy(chat=> chat.ConversationId)
+                .Select(group => new
                 {
-                    chat.Message,
-                    SenderUser = new { chat.ChatSenderUser.FirstName, chat.ChatSenderUser.LastName },
-                    RecieverUSer = new { chat.ChatRecieverUser.FirstName, chat.ChatSenderUser.LastName }
+                    conversationId=group.Key,
+                    chat_Id = group.Max(chat2=> chat2.Id),
+                    chat =  group.Where(chat=> chat.Id == group.Max(chat2 => chat2.Id))
+                                .Select(chat9 => new { 
+                                                        chat9.Id,
+                                                        SenderUser = new {
+                                                                chat9.ChatSenderUser.FirstName,
+                                                                chat9.ChatSenderUser.LastName,
+                                                                chat9.ChatSenderUser.PhotoUrl,
+                                                                chat9.ChatSenderUser.UserId
+                                                        },
+                                                        RecieverUser= new
+                                                        {
+                                                            chat9.ChatRecieverUser.FirstName,
+                                                            chat9.ChatRecieverUser.LastName,
+                                                            chat9.ChatRecieverUser.PhotoUrl,
+                                                            chat9.ChatRecieverUser.UserId
+                                                        },
+                                                        chat9.DateOfMessage,
+                                                        chat9.Message
+                                                        }).FirstOrDefault()
+
                 }).ToList();
 
            return Ok(chats);
+        }
+        [HttpGet]
+        [Route("api/chat/getChatByConversationId")]
+        public IHttpActionResult getChatByConversationId(string conversationId)
+        {
+            var chats = db.Chats
+                .Where(chat => chat.ConversationId.Equals(conversationId))
+                .OrderByDescending(chat=> chat.Id)
+                .Select(chat => new
+                {
+                    chat.Id,
+                    SenderUser = new
+                    {
+                        chat.ChatSenderUser.FirstName,
+                        chat.ChatSenderUser.LastName,
+                        chat.ChatSenderUser.PhotoUrl,
+                        chat.ChatSenderUser.UserId
+                    },
+                    RecieverUser = new
+                    {
+                        chat.ChatRecieverUser.FirstName,
+                        chat.ChatRecieverUser.LastName,
+                        chat.ChatRecieverUser.PhotoUrl,
+                        chat.ChatRecieverUser.UserId
+                    },
+                    chat.DateOfMessage,
+                    chat.Message
+                })
+                .ToList();
+            return Ok(chats);
         }
     }
 }

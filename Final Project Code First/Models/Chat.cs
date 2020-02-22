@@ -20,16 +20,17 @@ namespace Final_Project_Code_First.Models
         [Column("Chat_Status_Id")]
         public ChatStatusEnum ChatStatusId { get; set; }
         public virtual ChatStatus ChatStatus { get; set; }
-
-       // [Required]
-        //[Column("Chat_Sender_User_Id")]
-        ////[ForeignKey("SenderUser")]
-        //public int? SenderUserId { get; set; }
+        [Column("Conversation_Id")]
+        public string ConversationId { get; set; }
+        //[Required]
+        [Column("Chat_Sender_User_Id")]
+        [ForeignKey("ChatSenderUser")]
+        public int? SenderUserId { get; set; }
         public virtual User ChatSenderUser { get; set; }
-      //  [Required]
-        //[ForeignKey("RecieverUser")]
-        //[Column("Chat_Reciever_User_Id")]
-        //public int? RecieverUSerId { get; set; }
+        //[Required]
+        [ForeignKey("ChatRecieverUser")]
+        [Column("Chat_Reciever_User_Id")]
+        public int? RecieverUSerId { get; set; }
         public virtual User ChatRecieverUser { get; set; }
 
     }
