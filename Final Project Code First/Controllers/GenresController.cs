@@ -16,6 +16,7 @@ namespace CatagoryAPI.Controllers
     {
         private BookExchangeModel db = new BookExchangeModel();
         // GET: api/Genres
+        
         public IHttpActionResult GetGenres()
         {
             var geners = db.Genres.ToList().Take(20).Select(ww => new { ww.Genre_Id, ww.Genre_Name });
@@ -54,12 +55,23 @@ namespace CatagoryAPI.Controllers
 
         [ResponseType(typeof(void))]
         [HttpGet]
-        [Route("api/Genres/Pages")]
-        public IHttpActionResult GetGenresPages(int PageNumber, int pagSize)
+        [Route("api/Genres")]
+        public IHttpActionResult GetGenresPages(int PageNumber, int pagSize,string orderType)
         {
             //var genrenumbers=db.Genres.Select(ww => new { ww.Genre_Id, ww.Genre_Name }).ToList();
-            var genre = db.Genres.OrderBy(ww => ww.Genre_Id).Skip((PageNumber - 1) * pagSize).Take(pagSize).ToList().Select(ww => new { ww.Genre_Name, ww.Genre_Id });
-            return Ok(genre);
+            var count = db.Genres.Count();
+            if(orderType == "genreId")
+            {
+                var genre = db.Genres.OrderBy(ww => ww.Genre_Id).Skip((PageNumber - 1) * pagSize).Take(pagSize).ToList().Select(ww => new { ww.Genre_Name, ww.Genre_Id });
+                return Ok(new { count, genre });
+            }
+            else if(orderType == "genreName")
+            { 
+                var genre = db.Genres.OrderBy(ww => ww.Genre_Name).Skip((PageNumber - 1) * pagSize).Take(pagSize).ToList().Select(ww => new { ww.Genre_Name, ww.Genre_Id });  
+                return Ok(new { count,genre});
+            }
+            return NotFound();
+
         }
         // PUT: api/Genres/5
         [ResponseType(typeof(void))]

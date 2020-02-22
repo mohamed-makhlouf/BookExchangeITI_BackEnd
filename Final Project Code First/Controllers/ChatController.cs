@@ -27,13 +27,6 @@ namespace Final_Project_Code_First.Controllers
                         .Skip((page == 0 ? 1 : page) * 2)
                         .Take(2)
                         .ToList();
-            var chatsAll = GetChats()
-                          .Where(
-                chat => chat.ChatSenderUser.UserId == sender
-                || chat.ChatRecieverUser.UserId == sender)
-                          ;
-
-
             if (chats.Count == 0)
             {
                 return NotFound();
@@ -71,6 +64,7 @@ namespace Final_Project_Code_First.Controllers
             }
             return Ok();
         }
+
         [HttpGet]
         [Route("api/chat/getcurrentuserchat")]
         public IHttpActionResult GetAllChatByLoggedInUser(int userId)
@@ -136,5 +130,6 @@ namespace Final_Project_Code_First.Controllers
                 .ToList();
             return Ok(chats);
         }
+
     }
 }
