@@ -52,14 +52,19 @@ namespace Final_Project_Code_First.Controllers
         [ResponseType(typeof(Book))]
         [HttpGet]
         [Route("api/Books/page")]
-        public IHttpActionResult GetAllByPageNo(int pageNumber,int pageSize)
+        public IHttpActionResult GetAllByPageNo(int pageNumber,int pageSize,string pageType)
         {
+            if(pageType=="AuthorName")
+            { 
             var book = db.Books.OrderBy(ww => ww.Author_Name).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList().Select(ww => new { ww.Author_Name, ww.Title, ww.Rate});
-            if(book==null)
-            {
-                return NotFound();
+                return Ok(book);
             }
-            return Ok(book);
+            else if(pageType=="title")
+            { 
+            var book = db.Books.OrderBy(ww => ww.Title).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList().Select(ww => new { ww.Author_Name, ww.Title, ww.Rate});
+                return Ok(book);
+            }
+            return NotFound();
         }
         [ResponseType(typeof(Book))]
         [Route("api/Books/GetBookByAuthor/{auth_name:alpha}")]

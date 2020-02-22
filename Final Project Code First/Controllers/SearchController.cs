@@ -19,6 +19,7 @@ namespace Final_Project_Code_First.Controllers
         public IHttpActionResult GetSearchByName([FromUri]string name)
         {
             var book = db.Books.Where(BB => BB.Title.Contains(name)).ToList();
+
             if (book.Count == 0)
             {
                 var books = googleSearch.SearchByName(name);
