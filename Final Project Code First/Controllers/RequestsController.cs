@@ -189,7 +189,7 @@ namespace Final_Project_Code_First.Controllers
         }
 
         [HttpPut]
-        [Route("api/Requests/Accept")]
+        [Route("api/Request/Accept")]
         public IHttpActionResult CreateAcceptReq(int id)
         {
 
@@ -207,7 +207,7 @@ namespace Final_Project_Code_First.Controllers
         }
 
         [HttpPut]
-        [Route("api/Requests/Refuse")]
+        [Route("api/Request/Refuse")]
         public IHttpActionResult CreateRefuseReq(int id)
         {
             var resultrequest = db.Requests.Where(ww => ww.Id == id).FirstOrDefault();
