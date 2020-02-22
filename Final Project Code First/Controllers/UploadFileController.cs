@@ -38,11 +38,9 @@ namespace FileUpload.Controllers
                     postedFile.SaveAs(filePath);
                     docfiles.Add(filePath);
                 }
-
                 result = Request.CreateResponse(HttpStatusCode.Created, docfiles);
-                
                 _BookDb.Books.Add(new Book { Book_Id = bookId, Title = title, Rate = rate, Photo_Url = filePath,Author_Name=authName }) ;
-                    _BookDb.SaveChanges();
+                _BookDb.SaveChanges();
             }
             else
             {

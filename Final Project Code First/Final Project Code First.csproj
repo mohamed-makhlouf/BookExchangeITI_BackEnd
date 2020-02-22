@@ -370,6 +370,7 @@
     <Compile Include="Controllers\AuthentController.cs" />
     <Compile Include="Controllers\AuthorizationController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\GenresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ModifiedRequestController.cs" />
@@ -430,6 +431,10 @@
     <Compile Include="Migrations\202002201908169_fixed_reuest_Table2.cs" />
     <Compile Include="Migrations\202002201908169_fixed_reuest_Table2.designer.cs">
       <DependentUpon>202002201908169_fixed_reuest_Table2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002211601194_fixed_user_have_book1.cs" />
+    <Compile Include="Migrations\202002211601194_fixed_user_have_book1.designer.cs">
+      <DependentUpon>202002211601194_fixed_user_have_book1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActionParameters\LoginParameter.cs" />
@@ -591,6 +596,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002201908169_fixed_reuest_Table2.resx">
       <DependentUpon>202002201908169_fixed_reuest_Table2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002211601194_fixed_user_have_book1.resx">
+      <DependentUpon>202002211601194_fixed_user_have_book1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
