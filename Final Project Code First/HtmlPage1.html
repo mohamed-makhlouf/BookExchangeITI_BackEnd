@@ -13,17 +13,16 @@
            
             senderId = parseInt(prompt("enter sender id"));
           
-          ///  var con = $.hubConnection();
+            var con = $.hubConnection();
             //con.url= ;
-            // proxy = con.createHubProxy("chat");
+           proxy = con.createHubProxy("chat");
+           con.start();
 
-            //con.start();
+            proxy.on("newmessage", function (senderid, m  )
+            {
+                $("#mess").append("<li>" + s + " : " + m + ""+r+ "</li>");
 
-            //proxy.on("newMessage", function (s, r , m  )
-            //{
-            //    $("#mess").append("<li>" + s + " : " + m + ""+r+ "</li>");
-
-            //})
+            })
 
 
             //chathub = $.connection.chat;
@@ -44,8 +43,7 @@
 
         function send()
         {
-            proxy.invoke("sendMessage", s, r ,  $("#txt").val())
-
+            proxy.invoke("sendMessage", senderId , $("#txt").val())
 
            // chathub.server.sendMessage(senderId, $("#txt").val());
         }

@@ -347,25 +347,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Chat.cs">
-      <DependentUpon>ChatModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="ChatHub.cs" />
-    <Compile Include="ChatModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ChatModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ChatModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ChatModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ChatModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ChatModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\AuthentController.cs" />
     <Compile Include="Controllers\AuthorizationController.cs" />
@@ -458,16 +440,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
-    <Content Include="ChatModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ChatModel.edmx</DependentUpon>
-      <LastGenOutput>ChatModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="ChatModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ChatModel.edmx</DependentUpon>
-      <LastGenOutput>ChatModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -497,13 +469,6 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <EntityDeploy Include="ChatModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ChatModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="ChatModel.edmx.diagram">
-      <DependentUpon>ChatModel.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
