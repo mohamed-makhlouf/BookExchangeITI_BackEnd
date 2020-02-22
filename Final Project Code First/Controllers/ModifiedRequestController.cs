@@ -56,50 +56,15 @@ namespace Final_Project_Code_First.Controllers
         }
 
         [HttpGet]
-        [Route("api/home/want")]
-        public IHttpActionResult GetHaveBooks(int userId,int pageNumber,int pageSize)
+        [Route("api/home/have")]
+        public IHttpActionResult GetWantedHaveBooks(int userId, int pageNumber, int pageSize)
         {
-            
+
             if (userId == -1)
             {
                 var count = db.UserHaveBooks
                .Count();
                 var books = db.UserHaveBooks
-                    .Include("Book")
-                    .Include("User")
-                   .OrderByDescending(ww => ww.DateOfAdded)
-                   .Skip((pageNumber - 1) * pageSize)
-                   .Take(pageSize)
-                   .Select(ww => new
-                   {
-                       Book = new
-                       {
-                           ww.Book.Book_Id,
-                           ww.Book.Title,
-                           ww.Book.Photo_Url,
-                           ww.Book.Author_Name,
-                           ww.BookCondition.Name
-                       }
-                           ,
-                       User = new
-                       {
-                           ww.User.FirstName,
-                           ww.User.UserId,
-                           ww.User.PhotoUrl,
-                           ww.User.LastName
-                       }
-                   })
-                   .ToList();
-                return Ok(new { count,books });
-            }
-            else
-            {
-                var count = db.UserHaveBooks
-              .Count();
-                var books = db.UserHaveBooks
-                     .Include("Book")
-                    .Include("User")
-                    .Where(ww=> ww.UserId == userId)
                    .OrderByDescending(ww => ww.DateOfAdded)
                    .Skip((pageNumber - 1) * pageSize)
                    .Take(pageSize)
@@ -125,8 +90,107 @@ namespace Final_Project_Code_First.Controllers
                    .ToList();
                 return Ok(new { count, books });
             }
-            
-            
+            else
+            {
+                var count = db.UserHaveBooks
+              .Count();
+                var books = db.UserHaveBooks
+                    .Where(ww => ww.UserId == userId)
+                   .OrderByDescending(ww => ww.DateOfAdded)
+                   .Skip((pageNumber - 1) * pageSize)
+                   .Take(pageSize)
+                   .Select(ww => new
+                   {
+                       Book = new
+                       {
+                           ww.Book.Book_Id,
+                           ww.Book.Title,
+                           ww.Book.Photo_Url,
+                           ww.Book.Author_Name,
+                           ww.BookCondition.Name
+                       }
+                           ,
+                       User = new
+                       {
+                           ww.User.FirstName,
+                           ww.User.UserId,
+                           ww.User.PhotoUrl,
+                           ww.User.LastName
+                       }
+                   })
+                   .ToList();
+                return Ok(new { count, books });
+            }
+        }
+
+
+
+        [HttpGet]
+        [Route("api/home/want")]
+        public IHttpActionResult GetWantedHaveBooks2(int userId, int pageNumber, int pageSize)
+        {
+
+            if (userId == -1)
+            {
+                var count = db.UserWantBooks
+               .Count();
+                var books = db.UserWantBooks
+                   .OrderByDescending(ww => ww.DateBookAdded)
+                   .Skip((pageNumber - 1) * pageSize)
+                   .Take(pageSize)
+                   .Select(ww => new
+                   {
+                       Book = new
+                       {
+                           ww.Book.Book_Id,
+                           ww.Book.Title,
+                           ww.Book.Photo_Url,
+                           ww.Book.Author_Name,
+                                                  
+                       }
+                           ,
+                       User = new
+                       {
+                           ww.User.FirstName,
+                           ww.User.UserId,
+                           ww.User.PhotoUrl,
+                           ww.User.LastName
+                       }
+                   })
+                   .ToList();
+                return Ok(new { count, books });
+            }
+            else
+            {
+                var count = db.UserWantBooks
+              .Count();
+                var books = db.UserWantBooks
+                    .Where(ww => ww.UserId == userId)
+                   .OrderByDescending(ww => ww.DateBookAdded)
+                   .Skip((pageNumber - 1) * pageSize)
+                   .Take(pageSize)
+                   .Select(ww => new
+                   {
+                       Book = new
+                       {
+                           ww.Book.Book_Id,
+                           ww.Book.Title,
+                           ww.Book.Photo_Url,
+                           ww.Book.Author_Name
+                         
+                       }
+                           ,
+                       User = new
+                       {
+                           ww.User.FirstName,
+                           ww.User.UserId,
+                           ww.User.PhotoUrl,
+                           ww.User.LastName
+                       }
+                   })
+                   .ToList();
+                return Ok(new { count, books });
+            }
         }
     }
 }
