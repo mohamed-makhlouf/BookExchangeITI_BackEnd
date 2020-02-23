@@ -56,5 +56,9 @@ namespace Final_Project_Code_First.Models
         public String Want { get; set; }
         [NotMapped]
         public IList<string> Categories { get; set; }
+        [NotMapped]
+        public int BookCondition { get; set; }
+        [NotMapped]
+        public string Categor { get; set; }
     }
 }

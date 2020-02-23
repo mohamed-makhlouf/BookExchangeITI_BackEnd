@@ -21,17 +21,18 @@ namespace Final_Project_Code_First.Controllers
                 .Include("Book")
                 .Include("User")
                 .Include("RequestStaus")
-                .Where(req => req.RecieverId == currentUSerId).Count();
+                .Where(req => req.RecieverId == currentUSerId || req.SenderId == currentUSerId).Count();
             var requests = db.Requests
                 .Include("Book")
                 .Include("User")
                 .Include("RequestStaus")
-                .Where(req => req.RecieverId == currentUSerId)
-                .OrderByDescending(req=>req.DateOfMessage)
+                .Where(req => req.RecieverId == currentUSerId || req.SenderId == currentUSerId)
+                .OrderByDescending(req=>req.Id)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize )
                 .Select(req=> new { req.Id,
                     req.DateOfMessage,
+                    req.SendSwapUsertId,
                     //req.SenderId,
                     RequestedUser = new
                     {
@@ -291,6 +292,43 @@ namespace Final_Project_Code_First.Controllers
                    .ToList();
                 return Ok(new { count, books });
             }
+        }
+    
+        [HttpGet]
+        [Route("api/home/book/have")]
+        public IHttpActionResult GetUserHaveBook(int bookId)
+        {
+            
+                var count = db.UserHaveBooks
+                .Where(ww => ww.BookId == bookId)
+                            .Count();
+                var users = db.UserHaveBooks
+                    .Where(ww => ww.BookId == bookId)
+                   .OrderByDescending(ww => ww.DateOfAdded)
+                   //.Skip((pageNumber - 1) * pageSize)
+                   //.Take(pageSize)
+                   .Select(ww => new
+                   {
+                       Book = new
+                       {
+                           ww.Book.Book_Id,
+                           ww.Book.Title,
+                           ww.Book.Photo_Url,
+                           ww.Book.Author_Name,
+                           ww.BookCondition.Name
+                       }
+                           ,
+                       User = new
+                       {
+                           ww.User.FirstName,
+                           ww.User.UserId,
+                           ww.User.PhotoUrl,
+                           ww.User.LastName
+                       }
+                   })
+                   .ToList();
+                return Ok(new { count, users });
+           
         }
     }
 }

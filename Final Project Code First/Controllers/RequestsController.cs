@@ -217,6 +217,7 @@ namespace Final_Project_Code_First.Controllers
                     resultRequests.Id,
                     resultRequests.DateOfMessage,
                     resultRequests.SenderId,
+                    resultRequests.SendSwapUsertId,
                     RequestedUser = new
                     {
                         resultRequests.RecieverUser.UserId,
@@ -269,6 +270,7 @@ namespace Final_Project_Code_First.Controllers
                     resultrequest.Id,
                     resultrequest.DateOfMessage,
                     resultrequest.SenderId,
+                    resultrequest.SendSwapUsertId,
                     RequestedUser = new
                     {
                         resultrequest.RecieverUser.UserId,
@@ -319,25 +321,34 @@ namespace Final_Project_Code_First.Controllers
                 {
                     return StatusCode(HttpStatusCode.NotAcceptable);
                 }
-                var userWantBookCheck = db.UserWantBooks.Where(uwb => uwb.UserId == resultRequest.RecieverId && uwb.BookId == resultRequest.RequestedBookId).FirstOrDefault();
-                if(userWantBookCheck == null)
-                {
-                    return StatusCode(HttpStatusCode.NotAcceptable);
+                //var userWantBookCheck = db.UserWantBooks.Where(uwb => uwb.UserId == resultRequest.RecieverId && uwb.BookId == resultRequest.RequestedBookId).FirstOrDefault();
+                //if(userWantBookCheck == null)
+                //{
+                //    return StatusCode(HttpStatusCode.NotAcceptable);
 
-                }
-                var temp = new UserHaveBook() { BookId = userWantBookCheck.BookId, UserId = userWantBookCheck.UserId , BookConditionId = userHaveBookCheck.BookConditionId};
-                var temp2 = new UserWantBook() { BookId = userHaveBookCheck.BookId, UserId = userHaveBookCheck.UserId };
-                db.Entry(temp).State = EntityState.Added;
-                db.Entry(temp2).State = EntityState.Added;
+                //}
+                // var temp = new UserHaveBook() { BookId = userWantBookCheck.BookId, UserId = userWantBookCheck.UserId , BookConditionId = userHaveBookCheck.BookConditionId};
+                //var temp2 = new UserWantBook() { BookId = userHaveBookCheck.BookId, UserId = userHaveBookCheck.UserId };
+                //var temp = new UserHaveBook() { BookId= userHaveBookCheck.BookId, UserId = userHaveBookCheck.UserId, BookConditionId = userHaveBookCheck.BookConditionId };
+                //temp.UserId = resultRequest.RecieverId;
+                //db.Entry(temp).State = EntityState.Added;
+                //db.Entry(temp2).State = EntityState.Added;
+                //;
+                //db.Entry(userWantBookCheck).State = EntityState.Deleted;
                 db.Entry(userHaveBookCheck).State = EntityState.Deleted;
-                db.Entry(userWantBookCheck).State = EntityState.Deleted;
-                db.SaveChanges();
+                var temp = new UserHaveBook() { BookId = userHaveBookCheck.BookId, UserId = userHaveBookCheck.UserId, BookConditionId = userHaveBookCheck.BookConditionId,DateOfAdded=DateTime.Now };
+                //userHaveBookCheck.UserId = resultRequest.RecieverId.Value;
+                db.Entry(temp).State = EntityState.Added;
 
+                db.SaveChanges();
+                resultRequest.RequestStatusId = RequestStatusEnum.AcceptSwap;
+                db.Entry(resultRequest).State = EntityState.Modified;
                 return Ok(new
                 {
                     resultRequest.Id,
                     resultRequest.DateOfMessage,
                     resultRequest.SenderId,
+                    resultRequest.SendSwapUsertId,
                     resultRequest = new
                     {
                         resultRequest.RecieverUser.UserId,
@@ -382,6 +393,8 @@ namespace Final_Project_Code_First.Controllers
             }
             else
             {
+                resultRequest.SendSwapUsertId = UserUtilities.GetCurrentUserId(User);
+
                 resultRequest.RequestStatusId = RequestStatusEnum.RequestSwap;
                 
                 db.Entry(resultRequest).State = EntityState.Modified;
@@ -392,6 +405,7 @@ namespace Final_Project_Code_First.Controllers
                     resultRequest.Id,
                     resultRequest.DateOfMessage,
                     resultRequest.SenderId,
+                    resultRequest.SendSwapUsertId,
                     RequestedUser = new
                     {
                         resultRequest.RecieverUser.UserId,
@@ -419,8 +433,7 @@ namespace Final_Project_Code_First.Controllers
                         resultRequest.SendedBook.Photo_Url,
                     },
                     RequestStatus = resultRequest.RequestStatusId
-
-                });
+                });;
             }
         }
 

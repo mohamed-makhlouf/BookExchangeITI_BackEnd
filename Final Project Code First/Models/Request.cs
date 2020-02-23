@@ -42,8 +42,12 @@ namespace Final_Project_Code_First.Models
         [Column("Request_Reciever_Id")]
         public int? RecieverId { get; set; }
         public virtual User RecieverUser { get; set; }
+        [ForeignKey("SendSwapUser")]
+        [Column("Sender_Swap_Id")]
+        public int? SendSwapUsertId { get; set; }
+        public virtual User SendSwapUser { get; set; }
 
-    
+
     }
     public enum RequestStatusEnum
     {

@@ -298,6 +298,10 @@
     <Compile Include="Migrations\202002230319077_Add GenreBook Table.designer.cs">
       <DependentUpon>202002230319077_Add GenreBook Table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002230800521_Update Request Table.cs" />
+    <Compile Include="Migrations\202002230800521_Update Request Table.designer.cs">
+      <DependentUpon>202002230800521_Update Request Table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActionParameters\LoginParameter.cs" />
     <Compile Include="Models\Book.cs" />
@@ -449,6 +453,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002230319077_Add GenreBook Table.resx">
       <DependentUpon>202002230319077_Add GenreBook Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002230800521_Update Request Table.resx">
+      <DependentUpon>202002230800521_Update Request Table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
