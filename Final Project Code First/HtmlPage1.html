@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/jquery-3.4.1.js"></script>
+    <script src="Scripts/jquery.signalR-2.2.2.js"></script>
+    <!--<script src="signalr/hubs"></script>-->
+    <script>
+
+        $(function () {
+            //hub
+           
+            senderId = parseInt(prompt("enter sender id"));
+          
+            var con = $.hubConnection();
+            //con.url= ;
+           proxy = con.createHubProxy("chat");
+           con.start();
+
+            proxy.on("newmessage", function (senderid, m  )
+            {
+                $("#mess").append("<li>" + s + " : " + m + ""+r+ "</li>");
+
+            })
+
+
+            //chathub = $.connection.chat;
+            ////$.connection.hub.url=;
+            //$.connection.hub.start({transport :'longPolling'}); 
+
+            //chathub.client.newMessage = function (senderId , m  )
+            //{
+            //    $("#mess").append("<li> sender" + senderId + " : " + m +"</li>")
+
+            //}
+        })
+        
+
+        //start connection
+
+        //send
+
+        function send()
+        {
+            proxy.invoke("sendMessage", senderId , $("#txt").val())
+
+           // chathub.server.sendMessage(senderId, $("#txt").val());
+        }
+
+        //receive
+
+    </script>
+</head>
+<body>
+
+    <input type="text" id="txt"/>
+    <input type="button" onclick="send()" value="send" />
+    <ul id="mess">
+
+    </ul>
+
+</body>
+</html>

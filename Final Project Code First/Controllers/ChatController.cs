@@ -1,10 +1,11 @@
-﻿using Final_Project_Code_First.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Final_Project_Code_First.Models;
+
 
 namespace Final_Project_Code_First.Controllers
 {
@@ -13,14 +14,14 @@ namespace Final_Project_Code_First.Controllers
         private BookExchangeModel db = new BookExchangeModel();
 
         // GET: api/Chats
-        public IQueryable<Chat> GetChats()
-        {
-            return db.Chats;
-        }
+        //public IQueryable<Chat> GetChats()
+        //{
+        //    return db.Chats;
+        //}
         [HttpGet]
         public IHttpActionResult GetChat(int sender, int receiver, int page)
         {
-            var chats = GetChats()
+            var chats = db.Chats
                         .Where(chat => chat.ChatSenderUser.UserId == sender && chat.ChatRecieverUser.UserId == receiver)
                         .OrderBy(chat => chat.DateOfMessage)
                         .Select(chat => new { SenderId=chat.ChatSenderUser.UserId, RecieverId=chat.ChatRecieverUser.UserId, chat.Message, chat.DateOfMessage, chat.ChatStatus.Name })
