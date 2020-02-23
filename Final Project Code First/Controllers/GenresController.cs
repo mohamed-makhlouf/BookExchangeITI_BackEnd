@@ -62,12 +62,12 @@ namespace CatagoryAPI.Controllers
             var count = db.Genres.Count();
             if(orderType == "genreId")
             {
-                var genre = db.Genres.OrderBy(ww => ww.Genre_Id).Skip((PageNumber - 1) * pagSize).Take(pagSize).ToList().Select(ww => new { ww.Genre_Name, ww.Genre_Id });
+                var genre = db.Genres.OrderBy(ww => ww.Genre_Id).Skip((PageNumber - 1) * pagSize).Take(pagSize).Select(ww => new { ww.Genre_Name, ww.Genre_Id }).ToList();
                 return Ok(new { count, genre });
             }
             else if(orderType == "genreName")
             { 
-                var genre = db.Genres.OrderBy(ww => ww.Genre_Name).Skip((PageNumber - 1) * pagSize).Take(pagSize).ToList().Select(ww => new { ww.Genre_Name, ww.Genre_Id });  
+                var genre = db.Genres.OrderBy(ww => ww.Genre_Name).Skip((PageNumber - 1) * pagSize).Take(pagSize).Select(ww => new { ww.Genre_Name, ww.Genre_Id }).ToList();  
                 return Ok(new { count,genre});
             }
             return NotFound();

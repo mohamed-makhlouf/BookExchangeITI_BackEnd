@@ -35,6 +35,8 @@ namespace Final_Project_Code_First.Models
         [JsonIgnore]
         //Navigation
         public virtual ICollection<Genre> Genres { get; set; }
+        public virtual ICollection<GenreBook> Genres2 { get; set; }
+
         [JsonIgnore]
         public virtual ICollection<UserHaveBook> UserHaveBooks { get; set; }
         [JsonIgnore]

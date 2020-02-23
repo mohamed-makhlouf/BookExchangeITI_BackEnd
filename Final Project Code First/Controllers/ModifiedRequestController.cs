@@ -17,28 +17,47 @@ namespace Final_Project_Code_First.Controllers
         public IHttpActionResult GetRecievedRequests(int pageNumber,int pageSize)
         {
             var currentUSerId =UserUtilities.GetCurrentUserId(User);
-            pageNumber = pageNumber == 0 ? 1 : 1;
+            var count = db.Requests
+                .Include("Book")
+                .Include("User")
+                .Include("RequestStaus")
+                .Where(req => req.RecieverId == currentUSerId).Count();
             var requests = db.Requests
-                //.Include("Book")
+                .Include("Book")
+                .Include("User")
+                .Include("RequestStaus")
                 .Where(req => req.RecieverId == currentUSerId)
                 .OrderByDescending(req=>req.DateOfMessage)
-                .Skip((pageNumber - 1)* pageSize)
-                .Take(pageSize)
-
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize )
                 .Select(req=> new { req.Id,
                     req.DateOfMessage,
-                    req.SenderId,
+                    //req.SenderId,
+                    RequestedUser = new
+                    {
+                        req.RecieverUser.UserId,
+                        req.RecieverUser.FirstName,
+                        req.RecieverUser.LastName,
+                        req.RecieverUser.PhotoUrl
+                    },
                     SenderUser = new { 
                         req.SenderUser.UserId,
                         req.SenderUser.FirstName,
                         req.SenderUser.LastName,
-                        req.SenderUser.PhotoUrl,},
-                    RequestedBook = new {
-                        req.SendedBook.Book_Id,
-                        req.SendedBook.Title,
-                        req.SendedBook.Photo_Url,
+                        req.SenderUser.PhotoUrl
                     },
-                    RequestStatus=req.RequestStaus.Name
+                    RequestedBook = new {
+                        req.RequestedBook.Book_Id,
+                        req.RequestedBook.Title,
+                        req.RequestedBook.Photo_Url,
+                    },
+                    SendedBook=new {
+                         req.SendedBook.Book_Id,
+                         req.SendedBook.Title,
+                         req.SendedBook.Photo_Url,
+                    },
+                    RequestStatus = req.RequestStatusId
+
 
                 })
                 .ToList();
@@ -124,7 +143,88 @@ namespace Final_Project_Code_First.Controllers
         }
 
 
-
+        [HttpGet]
+        [Route("api/home/genres")]
+        public IHttpActionResult GetBooksByGenresId(int pageNumber, int pageSize, string type,int genreId)
+        {
+            //var count = db.Genres.Count();
+            if (type == "have")
+            {
+                var count = db.GenreBooks.Where(ww => ww.GenreId == genreId).Count();
+                var books = db.GenreBooks
+                   .Include("User")
+                   .Include("Book")
+                    .Where(ww=> ww.GenreId == genreId)
+                   .Join(db.UserHaveBooks,
+                        g=> g.BookId,
+                        uhb => uhb.BookId,
+                        (g,uhb) => uhb 
+                   )
+                   .OrderByDescending((ww) =>  ww.DateOfAdded)
+                   .Skip((pageNumber - 1) * pageSize)
+                   .Take(pageSize)
+                   .Select(ww => new
+                   {
+                       ww.DateOfAdded,
+                       Book = new
+                       {
+                           ww.Book.Book_Id,
+                           ww.Book.Title,
+                           ww.Book.Photo_Url,
+                           ww.Book.Author_Name,
+                           ww.BookCondition.Name
+                       }
+                           ,
+                       User = new
+                       {
+                           ww.User.FirstName,
+                           ww.User.UserId,
+                           ww.User.PhotoUrl,
+                           ww.User.LastName
+                       }
+                   })
+                   .ToList();
+                var x = 10;
+                return Ok(new { count, books });
+            }
+            else if (type == "want")
+            {
+                var count = db.GenreBooks.Where(ww => ww.GenreId == genreId).Count();
+          
+                var books = db.GenreBooks
+                   .Where(ww => ww.GenreId == genreId)
+                   .Join(db.UserWantBooks,
+                        g => g.BookId,
+                        uhb => uhb.BookId,
+                        (g, uhb) => new { uhb }
+                   )
+                   .OrderByDescending(ww => ww.uhb.DateBookAdded)
+                   .Skip((pageNumber - 1) * pageSize)
+                   .Take(pageSize)
+                   .Select(ww => new
+                   {
+                       Book = new
+                       {
+                           ww.uhb.Book.Book_Id,
+                           ww.uhb.Book.Title,
+                           ww.uhb.Book.Photo_Url,
+                           ww.uhb.Book.Author_Name,
+                       }
+                           ,
+                       User = new
+                       {
+                           ww.uhb.User.FirstName,
+                           ww.uhb.User.UserId,
+                           ww.uhb.User.PhotoUrl,
+                           ww.uhb.User.LastName
+                       }
+                   })
+                   .ToList();
+                var x = 10;
+                return Ok(new { count, books });
+            }
+            return NotFound();
+        }
         [HttpGet]
         [Route("api/home/want")]
         public IHttpActionResult GetWantedHaveBooks2(int userId, int pageNumber, int pageSize)

@@ -294,6 +294,10 @@
     <Compile Include="Migrations\202002220847461_fix_chat_table.designer.cs">
       <DependentUpon>202002220847461_fix_chat_table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002230319077_Add GenreBook Table.cs" />
+    <Compile Include="Migrations\202002230319077_Add GenreBook Table.designer.cs">
+      <DependentUpon>202002230319077_Add GenreBook Table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActionParameters\LoginParameter.cs" />
     <Compile Include="Models\Book.cs" />
@@ -301,6 +305,7 @@
     <Compile Include="Models\BookExchangeModel.cs" />
     <Compile Include="Models\Chat.cs" />
     <Compile Include="Models\Genre.cs" />
+    <Compile Include="Models\GenreBook.cs" />
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\Report.cs" />
     <Compile Include="Models\Request.cs" />
@@ -441,6 +446,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202002220847461_fix_chat_table.resx">
       <DependentUpon>202002220847461_fix_chat_table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002230319077_Add GenreBook Table.resx">
+      <DependentUpon>202002230319077_Add GenreBook Table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

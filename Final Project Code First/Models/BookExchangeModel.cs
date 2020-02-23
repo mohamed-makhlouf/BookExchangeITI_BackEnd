@@ -40,6 +40,7 @@ namespace Final_Project_Code_First.Models
         public DbSet<ChatStatus> ChatStatuses { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Report> Reports { get; set; }
+        public DbSet<GenreBook> GenreBooks { get; set; }
 
         public DbSet<Rating> Ratings { get; set; }
         

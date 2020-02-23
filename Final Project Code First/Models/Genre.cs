@@ -19,6 +19,6 @@ namespace Final_Project_Code_First.Models
         public string Genre_Name { get; set; }
         [JsonIgnore]
         public ICollection<Book> Books { get; set; }
-
+        public virtual ICollection<GenreBook> Books2 { get; set; }
     }
 }

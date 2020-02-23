@@ -202,7 +202,7 @@ namespace Final_Project_Code_First.Controllers
         [Route("api/Request/Accept")]
         public IHttpActionResult CreateAcceptReq(int id)
         {
-            var resultRequests = db.Requests.Where(ww => ww.Id == id).FirstOrDefault();
+            var resultRequests = db.Requests.Include("RequestStaus").Where(ww => ww.Id == id).FirstOrDefault();
             if (resultRequests == null)
             {
                 return NotFound();
@@ -211,7 +211,41 @@ namespace Final_Project_Code_First.Controllers
             {
                 resultRequests.RequestStatusId = RequestStatusEnum.Accepted;
                 db.Entry(resultRequests).State = EntityState.Modified;
-                return Ok(resultRequests);
+                db.SaveChanges();
+                return Ok(new
+                {
+                    resultRequests.Id,
+                    resultRequests.DateOfMessage,
+                    resultRequests.SenderId,
+                    RequestedUser = new
+                    {
+                        resultRequests.RecieverUser.UserId,
+                        resultRequests.RecieverUser.FirstName,
+                        resultRequests.RecieverUser.LastName,
+                        resultRequests.RecieverUser.PhotoUrl
+                    },
+                    SenderUser = new
+                    {
+                        resultRequests.SenderUser.UserId,
+                        resultRequests.SenderUser.FirstName,
+                        resultRequests.SenderUser.LastName,
+                        resultRequests.SenderUser.PhotoUrl
+                    },
+                    RequestedBook = new
+                    {
+                        resultRequests.RequestedBook.Book_Id,
+                        resultRequests.RequestedBook.Title,
+                        resultRequests.RequestedBook.Photo_Url,
+                    },
+                    SendedBook = new
+                    {
+                        resultRequests.SendedBook.Book_Id,
+                        resultRequests.SendedBook.Title,
+                        resultRequests.SendedBook.Photo_Url,
+                    },
+                    RequestStatus = resultRequests.RequestStatusId
+
+                });
             }
         }
 
@@ -228,7 +262,42 @@ namespace Final_Project_Code_First.Controllers
             {
                 resultrequest.RequestStatusId = RequestStatusEnum.Refused;
                 db.Entry(resultrequest).State = EntityState.Modified;
-                return Ok(resultrequest);
+                db.SaveChanges();
+
+                return Ok(new
+                {
+                    resultrequest.Id,
+                    resultrequest.DateOfMessage,
+                    resultrequest.SenderId,
+                    RequestedUser = new
+                    {
+                        resultrequest.RecieverUser.UserId,
+                        resultrequest.RecieverUser.FirstName,
+                        resultrequest.RecieverUser.LastName,
+                        resultrequest.RecieverUser.PhotoUrl
+                    },
+                    SenderUser = new
+                    {
+                        resultrequest.SenderUser.UserId,
+                        resultrequest.SenderUser.FirstName,
+                        resultrequest.SenderUser.LastName,
+                        resultrequest.SenderUser.PhotoUrl
+                    },
+                    RequestedBook = new
+                    {
+                        resultrequest.RequestedBook.Book_Id,
+                        resultrequest.RequestedBook.Title,
+                        resultrequest.RequestedBook.Photo_Url,
+                    },
+                    SendedBook = new
+                    {
+                        resultrequest.SendedBook.Book_Id,
+                        resultrequest.SendedBook.Title,
+                        resultrequest.SendedBook.Photo_Url,
+                    },
+                    RequestStatus = resultrequest.RequestStatusId
+
+                });
             }
         }
 
@@ -262,8 +331,42 @@ namespace Final_Project_Code_First.Controllers
                 db.Entry(temp2).State = EntityState.Added;
                 db.Entry(userHaveBookCheck).State = EntityState.Deleted;
                 db.Entry(userWantBookCheck).State = EntityState.Deleted;
-                
-                return Ok(resultRequest);
+                db.SaveChanges();
+
+                return Ok(new
+                {
+                    resultRequest.Id,
+                    resultRequest.DateOfMessage,
+                    resultRequest.SenderId,
+                    resultRequest = new
+                    {
+                        resultRequest.RecieverUser.UserId,
+                        resultRequest.RecieverUser.FirstName,
+                        resultRequest.RecieverUser.LastName,
+                        resultRequest.RecieverUser.PhotoUrl
+                    },
+                    SenderUser = new
+                    {
+                        resultRequest.SenderUser.UserId,
+                        resultRequest.SenderUser.FirstName,
+                        resultRequest.SenderUser.LastName,
+                        resultRequest.SenderUser.PhotoUrl
+                    },
+                    RequestedBook = new
+                    {
+                        resultRequest.RequestedBook.Book_Id,
+                        resultRequest.RequestedBook.Title,
+                        resultRequest.RequestedBook.Photo_Url,
+                    },
+                    SendedBook = new
+                    {
+                        resultRequest.SendedBook.Book_Id,
+                        resultRequest.SendedBook.Title,
+                        resultRequest.SendedBook.Photo_Url,
+                    },
+                    RequestStatus = resultRequest.RequestStatusId
+
+                });
             }
 
         }
@@ -282,7 +385,42 @@ namespace Final_Project_Code_First.Controllers
                 resultRequest.RequestStatusId = RequestStatusEnum.RequestSwap;
                 
                 db.Entry(resultRequest).State = EntityState.Modified;
-                return Ok(resultRequest);
+                db.SaveChanges();
+
+                return Ok(new
+                {
+                    resultRequest.Id,
+                    resultRequest.DateOfMessage,
+                    resultRequest.SenderId,
+                    RequestedUser = new
+                    {
+                        resultRequest.RecieverUser.UserId,
+                        resultRequest.RecieverUser.FirstName,
+                        resultRequest.RecieverUser.LastName,
+                        resultRequest.RecieverUser.PhotoUrl
+                    },
+                    SenderUser = new
+                    {
+                        resultRequest.SenderUser.UserId,
+                        resultRequest.SenderUser.FirstName,
+                        resultRequest.SenderUser.LastName,
+                        resultRequest.SenderUser.PhotoUrl
+                    },
+                    RequestedBook = new
+                    {
+                        resultRequest.RequestedBook.Book_Id,
+                        resultRequest.RequestedBook.Title,
+                        resultRequest.RequestedBook.Photo_Url,
+                    },
+                    SendedBook = new
+                    {
+                        resultRequest.SendedBook.Book_Id,
+                        resultRequest.SendedBook.Title,
+                        resultRequest.SendedBook.Photo_Url,
+                    },
+                    RequestStatus = resultRequest.RequestStatusId
+
+                });
             }
         }
 
