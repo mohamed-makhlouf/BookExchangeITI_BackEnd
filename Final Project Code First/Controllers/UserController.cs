@@ -45,7 +45,7 @@ namespace Users.Controllers
                 return Ok(query.Select(ww => new { ww.FirstName, ww.LastName, ww.Rate, ww.PhotoUrl }));
             }
 
-            return Ok(query.Select(ww => new { ww.FirstName, ww.LastName, ww.Rate, ww.PhotoUrl, ww.Address, ww.Email, ww.PhoneNumber, ww.City }).First());
+            return Ok(query.Select(ww => new { ww.FirstName, ww.LastName, ww.Rate, ww.PhotoUrl, ww.Address, ww.Email, ww.PhoneNumber, ww.City, ww.Blocked }).First());
 
         }
 

@@ -357,6 +357,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ModifiedRequestController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RequestsController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UploadFileController.cs" />
