@@ -32,6 +32,7 @@ namespace Users.Controllers
         // GETById
         [ResponseType(typeof(User))]
         [HttpGet]
+       
         public IHttpActionResult GetUser(int id, string type)
         {
             var query = db.Users.Where(ww => ww.UserId == id);
@@ -44,7 +45,7 @@ namespace Users.Controllers
                 return Ok(query.Select(ww => new { ww.FirstName, ww.LastName, ww.Rate, ww.PhotoUrl }));
             }
 
-            return Ok(query.Select(ww => new { ww.FirstName, ww.LastName, ww.Rate, ww.PhotoUrl, ww.Address, ww.Email, ww.PhoneNumber, ww.City }));
+            return Ok(query.Select(ww => new { ww.FirstName, ww.LastName, ww.Rate, ww.PhotoUrl, ww.Address, ww.Email, ww.PhoneNumber, ww.City, ww.Blocked }).First());
 
         }
 
@@ -63,18 +64,22 @@ namespace Users.Controllers
                 return Ok(query.Select(ww => new { ww.FirstName, ww.LastName, ww.Rate, ww.PhotoUrl }));
             }
 
-            return Ok(query.Select(ww => new { ww.FirstName, ww.LastName, ww.Rate, ww.PhotoUrl, ww.Address, ww.Email, ww.PhoneNumber, ww.City }));
+            return Ok(query.Select(ww => new { ww.FirstName, ww.LastName, ww.Rate, ww.PhotoUrl, ww.Address, ww.Email, ww.PhoneNumber, ww.City }).First());
 
 
         }
 
         // PUT: api/User/5
-        [ResponseType(typeof(void))]
+        //[ResponseType(typeof(void))]
+        [HttpPut]
         [Authorize]
-        
-        public IHttpActionResult PutUser( User user)
+        [Route("api/user/putUser")]
+
+
+        public IHttpActionResult PutUser([FromBody] User user)
         {
-            var currentId = UserUtilities.GetCurrentUserId(User);
+             var currentId = UserUtilities.GetCurrentUserId(User);
+            //var currentId = id;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -103,8 +108,9 @@ namespace Users.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(user);
         }
+
         // block and unblock
         [ResponseType(typeof(void))]
         [HttpDelete]

@@ -279,14 +279,49 @@ namespace Final_Project_Code_First.Controllers
                 return BadRequest(ModelState);
             }
             db.Books.Add(book);
+            db.SaveChanges();
+            foreach(string item in book.Categor.Split(','))
+            {
+                var genre = db.Genres.Where(gen => gen.Genre_Name.Equals(item)).FirstOrDefault();
+                if (genre == null)
+                {
+                    genre = new Genre() { Genre_Name = item };
+                    db.Genres.Add(genre);
+                    db.SaveChanges();
+                    db.GenreBooks.Add(new GenreBook() { BookId = book.Book_Id, GenreId = genre.Genre_Id });
+                }
+                else
+                {
+                    db.GenreBooks.Add(new GenreBook() { BookId = book.Book_Id, GenreId = genre.Genre_Id });
+                    db.SaveChanges();
+                }
+            }
+            
             if (book.Want.Equals("have"))
             {
-                db.UserHaveBooks.Add(new UserHaveBook() { UserId = LoggedInUserId, BookId = book.Book_Id,BookConditionId=BookConditionEnum.New });
+                var en = BookConditionEnum.Good;
+                if(book.BookCondition == 0)
+                {
+                    en = BookConditionEnum.New;
+                }else if (book.BookCondition == 1)
+                {
+                    en = BookConditionEnum.Good;
+                } else if (book.BookCondition == 2)
+                {
+                    en = BookConditionEnum.Fair;
+                }else if (book.BookCondition == 3)
+                {
+                    en = BookConditionEnum.Old;
+                };
+                //var x = db.BookConditions.Where(ww=> ww.Id == book.BookCondition);
+
+                db.UserHaveBooks.Add(new UserHaveBook() { UserId = LoggedInUserId, BookId = book.Book_Id,BookConditionId= en,DateOfAdded=DateTime.Now});
             }else if (book.Want.Equals("want"))
             {
 
                 var user = db.Users.Where(user2 => user2.UserId == LoggedInUserId).FirstOrDefault();
                 //book.UserWantBooks.Add(user);
+                db.UserWantBooks.Add(new UserWantBook() { BookId = book.Book_Id, UserId = LoggedInUserId });
             }
 
             try
