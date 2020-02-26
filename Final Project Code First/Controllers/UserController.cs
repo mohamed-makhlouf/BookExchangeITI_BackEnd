@@ -70,16 +70,16 @@ namespace Users.Controllers
         }
 
         // PUT: api/User/5
-        [ResponseType(typeof(void))]
-        [HttpPost]
-       // [Authorize]
-       [Route("api/user/putUser")]
+        //[ResponseType(typeof(void))]
+        [HttpPut]
+        [Authorize]
+        [Route("api/user/putUser")]
 
 
-        public IHttpActionResult PutUser([FromBody] User user, int id)
+        public IHttpActionResult PutUser([FromBody] User user)
         {
-            // var currentId = UserUtilities.GetCurrentUserId(User);
-            var currentId = id;
+             var currentId = UserUtilities.GetCurrentUserId(User);
+            //var currentId = id;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -108,7 +108,7 @@ namespace Users.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(user);
         }
 
         // block and unblock

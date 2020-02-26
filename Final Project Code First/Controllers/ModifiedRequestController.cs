@@ -96,6 +96,7 @@ namespace Final_Project_Code_First.Controllers
                            ww.Book.Title,
                            ww.Book.Photo_Url,
                            ww.Book.Author_Name,
+                           ww.Book.Description,
                            ww.BookCondition.Name
                        }
                            ,
@@ -127,6 +128,7 @@ namespace Final_Project_Code_First.Controllers
                            ww.Book.Title,
                            ww.Book.Photo_Url,
                            ww.Book.Author_Name,
+                           ww.Book.Description,
                            ww.BookCondition.Name
                        }
                            ,
@@ -173,6 +175,7 @@ namespace Final_Project_Code_First.Controllers
                            ww.Book.Title,
                            ww.Book.Photo_Url,
                            ww.Book.Author_Name,
+                           ww.Book.Description,
                            ww.BookCondition.Name
                        }
                            ,
@@ -210,6 +213,7 @@ namespace Final_Project_Code_First.Controllers
                            ww.uhb.Book.Title,
                            ww.uhb.Book.Photo_Url,
                            ww.uhb.Book.Author_Name,
+                           ww.uhb.Book.Description
                        }
                            ,
                        User = new
@@ -247,6 +251,7 @@ namespace Final_Project_Code_First.Controllers
                            ww.Book.Title,
                            ww.Book.Photo_Url,
                            ww.Book.Author_Name,
+                           ww.Book.Description
                                                   
                        }
                            ,
@@ -277,7 +282,8 @@ namespace Final_Project_Code_First.Controllers
                            ww.Book.Book_Id,
                            ww.Book.Title,
                            ww.Book.Photo_Url,
-                           ww.Book.Author_Name
+                           ww.Book.Author_Name,
+                           ww.Book.Description
                          
                        }
                            ,
@@ -315,7 +321,8 @@ namespace Final_Project_Code_First.Controllers
                            ww.Book.Title,
                            ww.Book.Photo_Url,
                            ww.Book.Author_Name,
-                           ww.BookCondition.Name
+                           ww.BookCondition.Name,
+                           ww.Book.Description
                        }
                            ,
                        User = new
